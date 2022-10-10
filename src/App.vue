@@ -7,11 +7,7 @@ const store = useStore();
 
 // filling out empty 2d grid
 // using objects to represent data of each cell in 2d grid
-const grid = reactive({
-  cells: [],
-  rows: 20,
-  cols: 50,
-});
+const grid = store.getters.getGrid
 
 for (let i = 0; i < grid.rows; i++) {
   const currentRow = [];
@@ -31,6 +27,8 @@ function createGridNodeObject(row, col) {
     isEnd:
       store.getters.getEndNode.row === row &&
       store.getters.getEndNode.col === col,
+    isVisited: false,
+    distance: null,
   };
 }
 
@@ -52,6 +50,8 @@ function runDjikstra(grid) {
         :col="grid.cells[i - 1][j - 1].col"
         :isStart="grid.cells[i - 1][j - 1].isStart"
         :isEnd="grid.cells[i - 1][j - 1].isEnd"
+        :isVisited="grid.cells[i - 1][j - 1].isVisited"
+        :distance="grid.cells[i - 1][j - 1].distance"
       ></GridNode>
     </div>
   </main>

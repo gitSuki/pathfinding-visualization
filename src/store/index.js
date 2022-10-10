@@ -3,6 +3,11 @@ import { createStore } from "vuex";
 export default createStore({
   state() {
     return {
+      grid: {
+        cells: [],
+        rows: 20,
+        cols: 50,
+      },
       startNode: {
         row: 9,
         col: 4,
@@ -14,6 +19,9 @@ export default createStore({
     };
   },
   getters: {
+    getGrid(state) {
+      return state.grid
+    },
     getStartNode(state) {
       return state.startNode;
     },
@@ -21,6 +29,10 @@ export default createStore({
       return state.endNode;
     },
   },
-  mutations: {},
+  mutations: {
+    createInitialGrid(state, payload) {
+      state.grid.cells = payload.value
+    }
+  },
   actions: {},
 });

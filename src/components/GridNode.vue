@@ -1,12 +1,13 @@
 <script setup>
 import { defineProps } from "vue";
 
-// data binded with 2d array
 const props = defineProps({
   row: Number,
   col: Number,
   isStart: Boolean,
   isEnd: Boolean,
+  isVisited: Boolean,
+  distance: null,
 });
 
 function printCoordinate() {
