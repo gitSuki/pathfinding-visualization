@@ -1,6 +1,9 @@
 <script setup>
 import { reactive } from "vue";
+import { useStore } from "vuex";
 import GridNode from "./components/GridNode.vue";
+
+const store = useStore();
 
 // creating empty 2d grid
 const grid = reactive({
@@ -21,10 +24,17 @@ for (let i = 0; i < grid.rows; i++) {
       <GridNode
         class="col"
         v-for="j in grid.cols"
+        :key="[i, j]"
         :row="i"
         :col="j"
-        :isStart="i === 10 && j === 5"
-        :isEnd="i === 10 && j === 45"
+        :isStart="
+          i === store.getters.getStartNode.row &&
+          j === store.getters.getStartNode.col
+        "
+        :isEnd="
+          i === store.getters.getEndNode.row &&
+          j === store.getters.getEndNode.col
+        "
       ></GridNode>
     </div>
   </main>
