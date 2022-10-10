@@ -4,12 +4,12 @@ export default createStore({
   state() {
     return {
       startNode: {
-        row: 10,
-        col: 5,
+        row: 9,
+        col: 4,
       },
       endNode: {
-        row: 10,
-        col: 45,
+        row: 9,
+        col: 44,
       },
     };
   },

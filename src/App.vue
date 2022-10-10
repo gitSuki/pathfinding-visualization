@@ -5,7 +5,8 @@ import GridNode from "./components/GridNode.vue";
 
 const store = useStore();
 
-// creating empty 2d grid
+// filling out empty 2d grid
+// using objects to represent data of each cell in 2d grid
 const grid = reactive({
   cells: [],
   rows: 20,
@@ -13,28 +14,44 @@ const grid = reactive({
 });
 
 for (let i = 0; i < grid.rows; i++) {
-  grid.cells[i] = [];
+  const currentRow = [];
+  for (let j = 0; j < grid.cols; j++) {
+    currentRow.push(createGridNodeObject(i, j));
+  }
+  grid.cells.push(currentRow);
+}
+
+function createGridNodeObject(row, col) {
+  return {
+    row: row,
+    col: col,
+    isStart:
+      store.getters.getStartNode.row === row &&
+      store.getters.getStartNode.col === col,
+    isEnd:
+      store.getters.getEndNode.row === row &&
+      store.getters.getEndNode.col === col,
+  };
+}
+
+// algorithims
+function runDjikstra(grid) {
+  console.log(grid.cells);
 }
 </script>
 
 <template>
   <nav>Header</nav>
+  <button @click="runDjikstra(grid)">Visualize Djikstra's Algorithim</button>
   <main>
     <div class="row" v-for="i in grid.rows">
+      <!-- v-for is 1-indexed -->
       <GridNode
-        class="col"
         v-for="j in grid.cols"
-        :key="[i, j]"
-        :row="i"
-        :col="j"
-        :isStart="
-          i === store.getters.getStartNode.row &&
-          j === store.getters.getStartNode.col
-        "
-        :isEnd="
-          i === store.getters.getEndNode.row &&
-          j === store.getters.getEndNode.col
-        "
+        :row="grid.cells[i - 1][j - 1].row"
+        :col="grid.cells[i - 1][j - 1].col"
+        :isStart="grid.cells[i - 1][j - 1].isStart"
+        :isEnd="grid.cells[i - 1][j - 1].isEnd"
       ></GridNode>
     </div>
   </main>
@@ -45,7 +62,6 @@ for (let i = 0; i < grid.rows; i++) {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  /* border: 1px solid red; */
 }
 
 main {

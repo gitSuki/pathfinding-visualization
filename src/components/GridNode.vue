@@ -1,7 +1,7 @@
 <script setup>
-import { defineProps, computed } from "vue";
+import { defineProps } from "vue";
 
-// coordinate data
+// data binded with 2d array
 const props = defineProps({
   row: Number,
   col: Number,
@@ -9,11 +9,9 @@ const props = defineProps({
   isEnd: Boolean,
 });
 
-const rowCoordinate = computed(() => props.row - 1);
-const colCoordinate = computed(() => props.col - 1);
-
 function printCoordinate() {
-  console.log("Row: " + rowCoordinate.value + " Col: " + colCoordinate.value);
+  console.log("Row: " + props.row + " Col: " + props.col);
+  console.log(props.isStart);
 }
 </script>
 
