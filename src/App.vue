@@ -18,7 +18,14 @@ for (let i = 0; i < grid.rows; i++) {
   <nav>Header</nav>
   <main>
     <div class="row" v-for="i in grid.rows">
-      <GridNode class="col" v-for="j in grid.cols" :row="i" :col="j"></GridNode>
+      <GridNode
+        class="col"
+        v-for="j in grid.cols"
+        :row="i"
+        :col="j"
+        :isStart="i === 10 && j === 5"
+        :isEnd="i === 10 && j === 45"
+      ></GridNode>
     </div>
   </main>
 </template>
@@ -28,7 +35,7 @@ for (let i = 0; i < grid.rows; i++) {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 main {
@@ -41,10 +48,4 @@ main {
 .row {
   display: flex;
 }
-
-/* .col {
-  background-color: lightgray;
-  border-style:solid;
-  border-width: 1px;
-} */
 </style>
