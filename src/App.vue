@@ -27,6 +27,7 @@ function createGridNodeObject(row, col) {
     isEnd:
       store.getters.getEndNode.row === row &&
       store.getters.getEndNode.col === col,
+    isWall: false,
     isVisited: false,
     isVisitedAnim: false,
     distance: Infinity,
@@ -47,8 +48,8 @@ function animateDjikstra(visitedNodesInOrder) {
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
     setTimeout(() => {
       visitedNodesInOrder[i].isVisitedAnim = true;
-      console.log(visitedNodesInOrder[i])
-      console.log(10 * i)
+      console.log(visitedNodesInOrder[i]);
+      console.log(10 * i);
     }, 10 * i);
   }
 }
@@ -68,6 +69,7 @@ function animateDjikstra(visitedNodesInOrder) {
         :col="grid.cells[i - 1][j - 1].col"
         :isStart="grid.cells[i - 1][j - 1].isStart"
         :isEnd="grid.cells[i - 1][j - 1].isEnd"
+        :isWall="grid.cells[i - 1][j - 1].isWall"
         :isVisited="grid.cells[i - 1][j - 1].isVisited"
         :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
         :distance="grid.cells[i - 1][j - 1].distance"

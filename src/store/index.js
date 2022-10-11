@@ -16,6 +16,7 @@ export default createStore({
         row: 9,
         col: 44,
       },
+      isMousePressed: false,
     };
   },
   getters: {
@@ -28,7 +29,21 @@ export default createStore({
     getEndNode(state) {
       return state.endNode;
     },
+    getMouseState(state) {
+      return state.isMousePressed;
+    },
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    setMouseState(state, payload) {
+      state.isMousePressed = payload.isMousePressed;
+    },
+  },
+  actions: {
+    clickHold(context) {
+      context.commit("setMouseState", { isMousePressed: true });
+    },
+    clickRelease(context) {
+      context.commit("setMouseState", { isMousePressed: false });
+    },
+  },
 });
