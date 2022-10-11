@@ -3,7 +3,7 @@ export default function djikstrasAlgo(grid, startNode, finishNode) {
   // all other nodes besides the startNode have their distance set to infinity
   startNode.distance = 0;
   const visitedNodesInOrder = [];
-  const unvisitedNodes = grid.flat().filter(node => !node.isWall);
+  const unvisitedNodes = grid.flat().filter((node) => !node.isWall);
 
   // attempts to find the shortest path to the finishNode by visiting every
   // neighboring unvisited node, marking them as visited and calculating their
@@ -13,10 +13,10 @@ export default function djikstrasAlgo(grid, startNode, finishNode) {
   while (unvisitedNodes.length > 0) {
     sortNodesByDistance(unvisitedNodes);
     const currNode = unvisitedNodes.shift();
-    
+
     // if solution can't be found
     if (currNode.distance === Infinity) return visitedNodesInOrder;
-    
+
     currNode.isVisited = true;
     visitedNodesInOrder.push(currNode);
     if (currNode === finishNode) return visitedNodesInOrder;

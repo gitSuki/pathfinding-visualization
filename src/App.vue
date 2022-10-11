@@ -48,8 +48,6 @@ function animateDjikstra(visitedNodesInOrder) {
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
     setTimeout(() => {
       visitedNodesInOrder[i].isVisitedAnim = true;
-      console.log(visitedNodesInOrder[i]);
-      console.log(10 * i);
     }, 10 * i);
   }
 }

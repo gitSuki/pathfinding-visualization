@@ -45,10 +45,10 @@ addEventListener("mouseup", () => {
     @mousedown="handleMouseDown(row, col)"
     @mouseenter="handleMouseEnter(row, col)"
     :class="{
-      startNode: isStart,
-      endNode: isEnd,
-      wallNode: isWall,
-      visitedNode: isVisitedAnim,
+      'start-node': isStart,
+      'end-node': isEnd,
+      'wall-node': isWall,
+      'visited-node': isVisitedAnim,
     }"
   ></div>
 </template>
@@ -57,22 +57,69 @@ addEventListener("mouseup", () => {
 div {
   width: 25px;
   height: 25px;
-  outline: 1px solid #727272;
+  outline: 1px solid #343f56;
   display: inline-block;
 }
 
-.startNode {
+.start-node {
   background-color: blue;
 }
-.endNode {
+.end-node {
   background-color: red;
 }
 
-.wallNode {
-  background-color: black;
+.wall-node {
+  background-color: #343f56;
+  animation: 500ms forwards wall-anim;
 }
 
-.visitedNode {
-  background-color: green;
+.visited-node {
+  animation: 2500ms ease-out forwards visited-anim;
+}
+
+@keyframes visited-anim {
+  0% {
+    transform: scale(0.3);
+    background-color: #000042;
+    border-radius: 75%;
+  }
+
+  20% {
+    background-color: #1168d9;
+  }
+
+  40% {
+    transform: scale(1.3);
+    background-color: #00d99f;
+  }
+
+  60% {
+    transform: scale(1);
+    background-color: #00beda;
+  }
+
+  80% {
+    transform: scale(1.05);
+    background-color: #00beda;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #00beda;
+  }
+}
+
+@keyframes wall-anim {
+  0% {
+    transform: scale(.75);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1.0);
+  }
 }
 </style>
