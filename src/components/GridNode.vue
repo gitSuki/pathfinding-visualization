@@ -10,6 +10,7 @@ const props = defineProps({
   isStart: Boolean,
   isEnd: Boolean,
   isVisited: Boolean,
+  isVisitedAnim: Boolean,
   distance: null,
 });
 
@@ -22,7 +23,7 @@ function printCoordinate() {
 <template>
   <div
     @click="printCoordinate"
-    :class="{ startNode: isStart, endNode: isEnd, visitedNode: isVisited }"
+    :class="{ startNode: isStart, endNode: isEnd, visitedNode: isVisitedAnim }"
   ></div>
 </template>
 

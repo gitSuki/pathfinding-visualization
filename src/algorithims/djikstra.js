@@ -1,8 +1,9 @@
 export default function djikstrasAlgo(grid, startNode, finishNode) {
+  // returns a list of all visited nodes in order
   // all other nodes besides the startNode have their distance set to infinity
   startNode.distance = 0;
   const visitedNodesInOrder = [];
-  const unvisitedNodes = grid.cells.flat(); // flattened version of original 2d array
+  const unvisitedNodes = grid.flat(); // flattened version of original 2d array
 
   // attempts to find the shortest path to the finishNode by visiting every
   // neighboring unvisited node, marking them as visited and calculating their
@@ -16,7 +17,7 @@ export default function djikstrasAlgo(grid, startNode, finishNode) {
     visitedNodesInOrder.push(currNode);
 
     if (currNode === finishNode) return visitedNodesInOrder;
-    else updateUnvisitedNeighbors(currNode, grid.cells);
+    else updateUnvisitedNeighbors(currNode, grid);
   }
 }
 
@@ -39,10 +40,13 @@ function getUnvisitedNeighbors(node, gridCells) {
   // if so they are  added to the array
   if (row > 0 && !gridCells[row - 1][col].isVisited)
     neighbors.push(gridCells[row - 1][col]);
+
   if (row < gridCells.length - 1 && !gridCells[row + 1][col].isVisited)
     neighbors.push(gridCells[row + 1][col]);
+
   if (col > 0 && !gridCells[row][col - 1].isVisited)
     neighbors.push(gridCells[row][col - 1]);
+
   if (col < gridCells[0].length - 1 && !gridCells[row][col + 1].isVisited)
     neighbors.push(gridCells[row][col + 1]);
   return neighbors;
