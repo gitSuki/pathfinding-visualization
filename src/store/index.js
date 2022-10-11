@@ -10,11 +10,11 @@ export default createStore({
       },
       startNode: {
         row: 9,
-        col: 4,
+        col: 9,
       },
       endNode: {
         row: 9,
-        col: 44,
+        col: 39,
       },
       isMousePressed: false,
     };

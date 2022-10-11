@@ -18,14 +18,18 @@ const props = defineProps({
 // click and drag functionality
 function handleMouseDown(row, col) {
   const grid = store.getters.getGrid;
-  grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+  if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
+    grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+  }
   store.dispatch("clickHold");
 }
 
 function handleMouseEnter(row, col) {
   if (store.getters.getMouseState) {
     const grid = store.getters.getGrid;
-    grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
   }
 }
 
