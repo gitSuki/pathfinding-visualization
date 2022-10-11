@@ -12,6 +12,7 @@ const props = defineProps({
   isWall: Boolean,
   isVisited: Boolean,
   isVisitedAnim: Boolean,
+  previousNode: null,
   distance: null,
 });
 
@@ -74,44 +75,34 @@ div {
 }
 
 .visited-node {
-  animation: 2500ms ease-out forwards visited-anim;
+  animation: 2200ms ease-out forwards visited-anim;
 }
 
 @keyframes visited-anim {
   0% {
-    transform: scale(0.3);
-    background-color: #000042;
-    border-radius: 75%;
+    transform: scale(.3);
+    background-color: rgba(0, 0, 66, 0.75);
+    border-radius: 100%;
   }
 
-  20% {
-    background-color: #1168d9;
+  50% {
+    background-color: rgba(17, 104, 217, 0.75);
   }
 
-  40% {
-    transform: scale(1.3);
-    background-color: #00d99f;
-  }
-
-  60% {
-    transform: scale(1);
-    background-color: #00beda;
-  }
-
-  80% {
-    transform: scale(1.05);
-    background-color: #00beda;
+  75% {
+    transform: scale(1.2);
+    background-color: rgba(0, 217, 159, 0.75)
   }
 
   100% {
-    transform: scale(1);
-    background-color: #00beda;
+    transform: scale(1.0);
+    background-color: rgba(0, 190, 218, 0.75);
   }
 }
 
 @keyframes wall-anim {
   0% {
-    transform: scale(.75);
+    transform: scale(0.75);
   }
 
   50% {
@@ -119,7 +110,7 @@ div {
   }
 
   100% {
-    transform: scale(1.0);
+    transform: scale(1);
   }
 }
 </style>

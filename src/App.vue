@@ -30,6 +30,7 @@ function createGridNodeObject(row, col) {
     isWall: false,
     isVisited: false,
     isVisitedAnim: false,
+    previousNode: null,
     distance: Infinity,
   };
 }
@@ -41,6 +42,8 @@ function runDjikstra(grid) {
   const endNode =
     grid[store.getters.getEndNode.row][store.getters.getEndNode.col];
   const visitedNodesInOrder = djikstrasAlgo(grid, startNode, endNode);
+  const shortestPath = findShortestPath(endNode)
+  console.log(shortestPath)
   animateDjikstra(visitedNodesInOrder);
 }
 
@@ -48,9 +51,23 @@ function animateDjikstra(visitedNodesInOrder) {
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
     setTimeout(() => {
       visitedNodesInOrder[i].isVisitedAnim = true;
-    }, 10 * i);
+    }, 12.5 * i);
   }
 }
+
+function findShortestPath(endNode) {
+  const shortestPath = [];
+  let currentNode = endNode;
+  while (currentNode !== null) {
+    shortestPath.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+  return shortestPath;
+}
+
+// function animateShortestPath() {
+  
+// }
 </script>
 
 <template>
@@ -70,6 +87,7 @@ function animateDjikstra(visitedNodesInOrder) {
         :isWall="grid.cells[i - 1][j - 1].isWall"
         :isVisited="grid.cells[i - 1][j - 1].isVisited"
         :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
+        :previousNode="grid.cells[i - 1][j - 1].previousNode"
         :distance="grid.cells[i - 1][j - 1].distance"
       ></GridNode>
     </div>
