@@ -1,5 +1,8 @@
 <script setup>
 import { defineProps } from "vue";
+import { useStore } from "vuex";
+
+const store = useStore();
 
 const props = defineProps({
   row: Number,
@@ -11,15 +14,15 @@ const props = defineProps({
 });
 
 function printCoordinate() {
-  console.log("Row: " + props.row + " Col: " + props.col);
-  console.log(props.isStart);
+  const grid = store.getters.getGrid
+  console.log(grid.cells[props.row][props.col])
 }
 </script>
 
 <template>
   <div
     @click="printCoordinate"
-    :class="{ startNode: isStart, endNode: isEnd }"
+    :class="{ startNode: isStart, endNode: isEnd, visitedNode: isVisited }"
   ></div>
 </template>
 
@@ -36,5 +39,9 @@ div {
 }
 .endNode {
   background-color: red;
+}
+
+.visitedNode {
+  background-color: green;
 }
 </style>

@@ -20,7 +20,7 @@ export default createStore({
   },
   getters: {
     getGrid(state) {
-      return state.grid
+      return state.grid;
     },
     getStartNode(state) {
       return state.startNode;
@@ -29,10 +29,6 @@ export default createStore({
       return state.endNode;
     },
   },
-  mutations: {
-    createInitialGrid(state, payload) {
-      state.grid.cells = payload.value
-    }
-  },
+  mutations: {},
   actions: {},
 });
