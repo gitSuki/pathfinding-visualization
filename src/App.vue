@@ -87,14 +87,17 @@ function animateShortestPath(shortestPath) {
 
 // navbar functions
 function clearBoard() {
-  for (let i = 0; i < grid.rows; i++) {
-    for (let j = 0; j < grid.cols; j++) {
-      grid.cells[i][j].isWall = false;
-      grid.cells[i][j].isVisited = false;
-      grid.cells[i][j].isVisitedAnim = false;
-      grid.cells[i][j].isShortestPathAnim = false;
-      grid.cells[i][j].previousNode = null;
-      grid.cells[i][j].distance = Infinity;
+  // disables if animation is running
+  if (!store.getters.getAnimState) {
+    for (let i = 0; i < grid.rows; i++) {
+      for (let j = 0; j < grid.cols; j++) {
+        grid.cells[i][j].isWall = false;
+        grid.cells[i][j].isVisited = false;
+        grid.cells[i][j].isVisitedAnim = false;
+        grid.cells[i][j].isShortestPathAnim = false;
+        grid.cells[i][j].previousNode = null;
+        grid.cells[i][j].distance = Infinity;
+      }
     }
   }
 }

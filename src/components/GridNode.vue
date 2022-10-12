@@ -19,15 +19,19 @@ const props = defineProps({
 
 // click and drag functionality
 function handleMouseDown(row, col) {
-  const grid = store.getters.getGrid;
-  if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
-    grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+  // disables if animation is running
+  if (!store.getters.getAnimState) {
+    const grid = store.getters.getGrid;
+    if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
+    store.dispatch("clickHold");
   }
-  store.dispatch("clickHold");
 }
 
 function handleMouseEnter(row, col) {
-  if (store.getters.getMouseState) {
+  // disables if mouse is not held or animation is running
+  if (store.getters.getMouseState && !store.getters.getAnimState) {
     const grid = store.getters.getGrid;
     if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
       grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
