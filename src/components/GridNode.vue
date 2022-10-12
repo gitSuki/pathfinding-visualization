@@ -64,7 +64,7 @@ addEventListener("mouseup", () => {
 div {
   width: 25px;
   height: 25px;
-  outline: 1px solid #343f56;
+  outline: 1px solid #4f5153;
   display: inline-block;
   transition: 500ms linear all;
 }
@@ -77,7 +77,7 @@ div {
 }
 
 .wall-node {
-  background-color: #343f56;
+  background-color: rgb(12, 53, 71);
   animation: 500ms forwards wall-anim;
 }
 
@@ -128,17 +128,17 @@ div {
 @keyframes shortest-path-anim {
   0% {
     transform: scale(0.6);
-    background-color: #387c6d;
+    background-color: #eeeeee;
   }
 
   50% {
     transform: scale(1.2);
-    background-color: #387c6d;
+    background-color: #eeeeee;
   }
 
   100% {
     transform: scale(1);
-    background-color: #387c6d;
+    background-color: #da7f4b;
   }
 }
 </style>

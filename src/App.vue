@@ -137,6 +137,10 @@ function clearBoard() {
   box-sizing: border-box;
 }
 
+body {
+  background-color: #36393e; 
+}
+
 main {
   max-width: 1200px;
   margin: 0 auto;
