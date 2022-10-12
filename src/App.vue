@@ -38,6 +38,7 @@ function createGridNodeObject(row, col) {
 
 // running algorithims
 function runDjikstra(grid) {
+  store.dispatch("animRun");
   const startNode =
     grid[store.getters.getStartNode.row][store.getters.getStartNode.col];
   const endNode =
@@ -47,7 +48,19 @@ function runDjikstra(grid) {
   animateDjikstra(visitedNodesInOrder, shortestPath);
 }
 
+function findShortestPath(endNode) {
+  const shortestPath = [];
+  let currentNode = endNode;
+  while (currentNode !== null) {
+    shortestPath.unshift(currentNode);
+    currentNode = currentNode.previousNode;
+  }
+  return shortestPath;
+}
+
 function animateDjikstra(visitedNodesInOrder, shortestPath) {
+  // creates the delayed animation effect that shows all the nodes
+  // that djikstras algo visited in order
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
     if (i === visitedNodesInOrder.length - 1) {
       setTimeout(() => {
@@ -61,34 +74,27 @@ function animateDjikstra(visitedNodesInOrder, shortestPath) {
 }
 
 function animateShortestPath(shortestPath) {
+  // creates the delayed animation effect to show the shortest path
+  // once djikstras algo has discovered the end node
   for (let i = 0; i < shortestPath.length; i++) {
     setTimeout(() => {
+      if (i === shortestPath.length - 1) store.dispatch("animEnd");
       shortestPath[i].isVisitedAnim = false;
       shortestPath[i].isShortestPathAnim = true;
     }, 25 * i);
   }
 }
 
-function findShortestPath(endNode) {
-  const shortestPath = [];
-  let currentNode = endNode;
-  while (currentNode !== null) {
-    shortestPath.unshift(currentNode);
-    currentNode = currentNode.previousNode;
-  }
-  return shortestPath;
-}
-
 // navbar functions
 function clearBoard() {
   for (let i = 0; i < grid.rows; i++) {
     for (let j = 0; j < grid.cols; j++) {
-      grid.cells[i][j].isWall = false
-      grid.cells[i][j].isVisited = false
-      grid.cells[i][j].isVisitedAnim = false
-      grid.cells[i][j].isShortestPathAnim = false
-      grid.cells[i][j].previousNode = null
-      grid.cells[i][j].distance = Infinity
+      grid.cells[i][j].isWall = false;
+      grid.cells[i][j].isVisited = false;
+      grid.cells[i][j].isVisitedAnim = false;
+      grid.cells[i][j].isShortestPathAnim = false;
+      grid.cells[i][j].previousNode = null;
+      grid.cells[i][j].distance = Infinity;
     }
   }
 }

@@ -17,6 +17,7 @@ export default createStore({
         col: 39,
       },
       isMousePressed: false,
+      isAnimRunning: false,
     };
   },
   getters: {
@@ -32,11 +33,17 @@ export default createStore({
     getMouseState(state) {
       return state.isMousePressed;
     },
+    getAnimState(state) {
+      return state.isAnimRunning
+    }
   },
   mutations: {
     setMouseState(state, payload) {
       state.isMousePressed = payload.isMousePressed;
     },
+    setAnimState(state, payload) {
+      state.isAnimRunning = payload.  isAnimRunning;
+    }
   },
   actions: {
     clickHold(context) {
@@ -44,6 +51,13 @@ export default createStore({
     },
     clickRelease(context) {
       context.commit("setMouseState", { isMousePressed: false });
+    },
+    animRun(context) {
+      context.commit("setAnimState", { isAnimRunning: true });
+    },
+    animEnd(context) {
+      context.commit("setAnimState", { isAnimRunning: false });
+      console.log('end')
     },
   },
 });

@@ -62,6 +62,7 @@ div {
   height: 25px;
   outline: 1px solid #343f56;
   display: inline-block;
+  transition: 500ms linear all;
 }
 
 .start-node {
@@ -81,7 +82,7 @@ div {
 }
 
 .shortest-path-node {
-  animation: 1000ms ease-out forwards shortest-path;
+  animation: 1000ms ease-out forwards shortest-path-anim;
 }
 
 @keyframes visited-anim {
@@ -120,7 +121,7 @@ div {
   }
 }
 
-@keyframes shortest-path {
+@keyframes shortest-path-anim {
   0% {
     transform: scale(0.6);
     background-color: #387c6d;
