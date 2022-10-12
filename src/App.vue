@@ -66,11 +66,11 @@ function animateDjikstra(visitedNodesInOrder, shortestPath) {
     if (i === visitedNodesInOrder.length - 1) {
       setTimeout(() => {
         animateShortestPath(shortestPath);
-      }, 10 * i);
+      }, 15 * i);
     }
     setTimeout(() => {
       visitedNodesInOrder[i].isVisitedAnim = true;
-    }, 10 * i);
+    }, 15 * i);
   }
 }
 
@@ -111,8 +111,8 @@ function animateShortestPath(shortestPath) {
 
 <style>
 @font-face {
-    font-family: kiona-regular;
-    src: url(./assets/Kiona-Regular.ttf) ;
+  font-family: kiona-regular;
+  src: url(./assets/Kiona-Regular.ttf);
 }
 
 * {
@@ -123,7 +123,7 @@ function animateShortestPath(shortestPath) {
 }
 
 body {
-  background-color: #36393e; 
+  background-color: #36393e;
 }
 
 main {

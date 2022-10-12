@@ -127,7 +127,7 @@ div {
 
 @keyframes shortest-path-anim {
   0% {
-    transform: scale(0.6);
+    transform: scale(0.3);
     background-color: #eeeeee;
   }
 

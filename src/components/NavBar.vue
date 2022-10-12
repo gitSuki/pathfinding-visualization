@@ -5,19 +5,22 @@ import { useStore } from "vuex";
 const store = useStore();
 const emit = defineEmits(["visualization"]);
 
+const isAnimActive = computed(() => store.getters.getAnimState);
+
 function runVisualization() {
+  // automatically clears the board of everything except walls
+  clearBoard(false);
   emit("visualization");
 }
 
-const areButtonsDisabled = computed(() => store.getters.getAnimState);
-
-function clearBoard() {
+function clearBoard(clearWalls) {
   // disables if animation is running
   if (!store.getters.getAnimState) {
     const grid = store.getters.getGrid;
     for (let i = 0; i < grid.rows; i++) {
       for (let j = 0; j < grid.cols; j++) {
-        grid.cells[i][j].isWall = false;
+        // resets every variable to default
+        if (clearWalls) grid.cells[i][j].isWall = false;
         grid.cells[i][j].isVisited = false;
         grid.cells[i][j].isVisitedAnim = false;
         grid.cells[i][j].isShortestPathAnim = false;
@@ -36,14 +39,14 @@ function clearBoard() {
     <button
       @click="runVisualization"
       class="visualize-btn"
-      :class="{ 'disabled-btn': areButtonsDisabled }"
+      :class="{ 'disabled-btn': isAnimActive }"
     >
       Visualize
     </button>
     <button
-      @click="clearBoard"
+      @click="clearBoard(true)"
       class="clear-btn"
-      :class="{ 'disabled-btn': areButtonsDisabled }"
+      :class="{ 'disabled-btn': isAnimActive }"
     >
       Clear Board
     </button>
