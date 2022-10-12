@@ -110,7 +110,13 @@ function animateShortestPath(shortestPath) {
 </template>
 
 <style>
+@font-face {
+    font-family: kiona-regular;
+    src: url(./assets/Kiona-Regular.ttf) ;
+}
+
 * {
+  font-family: kiona-regular, sans-serif;
   margin: 0;
   padding: 0;
   box-sizing: border-box;
