@@ -28,29 +28,29 @@ function sortNodesByDistance(unvisitedNodes) {
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }
 
-function updateUnvisitedNeighbors(node, gridCells) {
-  const unvisitedNeighbors = getUnvisitedNeighbors(node, gridCells);
+function updateUnvisitedNeighbors(node, grid) {
+  const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
   for (let i = 0; i < unvisitedNeighbors.length; i++) {
     unvisitedNeighbors[i].distance = node.distance + 1; // add weighting here
     unvisitedNeighbors[i].previousNode = node;
   }
 }
 
-function getUnvisitedNeighbors(node, gridCells) {
+function getUnvisitedNeighbors(node, grid) {
   const neighbors = [];
   const { col, row } = node;
   // checking all neighboring nodes to see if they're valid
   // if so they are  added to the array
-  if (row > 0 && !gridCells[row - 1][col].isVisited)
-    neighbors.push(gridCells[row - 1][col]);
+  if (row > 0 && !grid[row - 1][col].isVisited)
+    neighbors.push(grid[row - 1][col]);
 
-  if (row < gridCells.length - 1 && !gridCells[row + 1][col].isVisited)
-    neighbors.push(gridCells[row + 1][col]);
+  if (row < grid.length - 1 && !grid[row + 1][col].isVisited)
+    neighbors.push(grid[row + 1][col]);
 
-  if (col > 0 && !gridCells[row][col - 1].isVisited)
-    neighbors.push(gridCells[row][col - 1]);
+  if (col > 0 && !grid[row][col - 1].isVisited)
+    neighbors.push(grid[row][col - 1]);
 
-  if (col < gridCells[0].length - 1 && !gridCells[row][col + 1].isVisited)
-    neighbors.push(gridCells[row][col + 1]);
+  if (col < grid[0].length - 1 && !grid[row][col + 1].isVisited)
+    neighbors.push(grid[row][col + 1]);
   return neighbors;
 }

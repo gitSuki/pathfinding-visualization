@@ -12,6 +12,7 @@ const props = defineProps({
   isWall: Boolean,
   isVisited: Boolean,
   isVisitedAnim: Boolean,
+  isShortestPathAnim: Boolean,
   previousNode: null,
   distance: null,
 });
@@ -50,6 +51,7 @@ addEventListener("mouseup", () => {
       'end-node': isEnd,
       'wall-node': isWall,
       'visited-node': isVisitedAnim,
+      'shortest-path-node': isShortestPathAnim,
     }"
   ></div>
 </template>
@@ -75,12 +77,16 @@ div {
 }
 
 .visited-node {
-  animation: 2200ms ease-out forwards visited-anim;
+  animation: 2000ms ease-out forwards visited-anim;
+}
+
+.shortest-path-node {
+  animation: 1000ms ease-out forwards shortest-path;
 }
 
 @keyframes visited-anim {
   0% {
-    transform: scale(.3);
+    transform: scale(0.3);
     background-color: rgba(0, 0, 66, 0.75);
     border-radius: 100%;
   }
@@ -91,11 +97,11 @@ div {
 
   75% {
     transform: scale(1.2);
-    background-color: rgba(0, 217, 159, 0.75)
+    background-color: rgba(0, 217, 159, 0.75);
   }
 
   100% {
-    transform: scale(1.0);
+    transform: scale(1);
     background-color: rgba(0, 190, 218, 0.75);
   }
 }
@@ -111,6 +117,23 @@ div {
 
   100% {
     transform: scale(1);
+  }
+}
+
+@keyframes shortest-path {
+  0% {
+    transform: scale(0.6);
+    background-color: #387c6d;
+  }
+
+  50% {
+    transform: scale(1.2);
+    background-color: #387c6d;
+  }
+
+  100% {
+    transform: scale(1);
+    background-color: #387c6d;
   }
 }
 </style>

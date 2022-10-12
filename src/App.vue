@@ -30,6 +30,7 @@ function createGridNodeObject(row, col) {
     isWall: false,
     isVisited: false,
     isVisitedAnim: false,
+    isShortestPathAnim: false,
     previousNode: null,
     distance: Infinity,
   };
@@ -42,16 +43,29 @@ function runDjikstra(grid) {
   const endNode =
     grid[store.getters.getEndNode.row][store.getters.getEndNode.col];
   const visitedNodesInOrder = djikstrasAlgo(grid, startNode, endNode);
-  const shortestPath = findShortestPath(endNode)
-  console.log(shortestPath)
-  animateDjikstra(visitedNodesInOrder);
+  const shortestPath = findShortestPath(endNode);
+  animateDjikstra(visitedNodesInOrder, shortestPath);
 }
 
-function animateDjikstra(visitedNodesInOrder) {
+function animateDjikstra(visitedNodesInOrder, shortestPath) {
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
+    if (i === visitedNodesInOrder.length - 1) {
+      setTimeout(() => {
+        animateShortestPath(shortestPath);
+      }, 10 * i);
+    }
     setTimeout(() => {
       visitedNodesInOrder[i].isVisitedAnim = true;
-    }, 12.5 * i);
+    }, 10 * i);
+  }
+}
+
+function animateShortestPath(shortestPath) {
+  for (let i = 0; i < shortestPath.length; i++) {
+    setTimeout(() => {
+      shortestPath[i].isVisitedAnim = false;
+      shortestPath[i].isShortestPathAnim = true
+    }, 25 * i);
   }
 }
 
@@ -64,10 +78,6 @@ function findShortestPath(endNode) {
   }
   return shortestPath;
 }
-
-// function animateShortestPath() {
-  
-// }
 </script>
 
 <template>
@@ -87,6 +97,7 @@ function findShortestPath(endNode) {
         :isWall="grid.cells[i - 1][j - 1].isWall"
         :isVisited="grid.cells[i - 1][j - 1].isVisited"
         :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
+        :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
         :previousNode="grid.cells[i - 1][j - 1].previousNode"
         :distance="grid.cells[i - 1][j - 1].distance"
       ></GridNode>
