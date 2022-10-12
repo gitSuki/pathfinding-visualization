@@ -64,7 +64,7 @@ function animateShortestPath(shortestPath) {
   for (let i = 0; i < shortestPath.length; i++) {
     setTimeout(() => {
       shortestPath[i].isVisitedAnim = false;
-      shortestPath[i].isShortestPathAnim = true
+      shortestPath[i].isShortestPathAnim = true;
     }, 25 * i);
   }
 }
@@ -78,13 +78,29 @@ function findShortestPath(endNode) {
   }
   return shortestPath;
 }
+
+// navbar functions
+function clearBoard() {
+  for (let i = 0; i < grid.rows; i++) {
+    for (let j = 0; j < grid.cols; j++) {
+      grid.cells[i][j].isWall = false
+      grid.cells[i][j].isVisited = false
+      grid.cells[i][j].isVisitedAnim = false
+      grid.cells[i][j].isShortestPathAnim = false
+      grid.cells[i][j].previousNode = null
+      grid.cells[i][j].distance = Infinity
+    }
+  }
+}
 </script>
 
 <template>
-  <nav>Header</nav>
-  <button @click="runDjikstra(grid.cells)">
-    Visualize Djikstra's Algorithim
-  </button>
+  <nav>
+    <button @click="runDjikstra(grid.cells)">
+      Visualize Djikstra's Algorithim
+    </button>
+    <button @click="clearBoard">Clear Board</button>
+  </nav>
   <main>
     <div class="row" v-for="i in grid.rows">
       <!-- v-for is 1-indexed -->
