@@ -77,7 +77,7 @@ div {
 }
 
 .wall-node {
-  background-color: rgb(12, 53, 71);
+  background-color: #858a8d;
   animation: 500ms forwards wall-anim;
 }
 
@@ -138,7 +138,7 @@ div {
 
   100% {
     transform: scale(1);
-    background-color: #da7f4b;
+    background-color: rgb(255, 254, 106);
   }
 }
 </style>

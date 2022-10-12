@@ -57,7 +57,6 @@ export default createStore({
     },
     animEnd(context) {
       context.commit("setAnimState", { isAnimRunning: false });
-      console.log('end')
     },
   },
 });

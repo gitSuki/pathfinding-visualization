@@ -1,5 +1,6 @@
 <script setup>
 import { useStore } from "vuex";
+import NavBar from "./components/NavBar.vue";
 import GridNode from "./components/GridNode.vue";
 import djikstrasAlgo from "./algorithims/djikstra.js";
 
@@ -84,36 +85,14 @@ function animateShortestPath(shortestPath) {
     }, 25 * i);
   }
 }
-
-// navbar functions
-function clearBoard() {
-  // disables if animation is running
-  if (!store.getters.getAnimState) {
-    for (let i = 0; i < grid.rows; i++) {
-      for (let j = 0; j < grid.cols; j++) {
-        grid.cells[i][j].isWall = false;
-        grid.cells[i][j].isVisited = false;
-        grid.cells[i][j].isVisitedAnim = false;
-        grid.cells[i][j].isShortestPathAnim = false;
-        grid.cells[i][j].previousNode = null;
-        grid.cells[i][j].distance = Infinity;
-      }
-    }
-  }
-}
 </script>
 
 <template>
-  <nav>
-    <button @click="runDjikstra(grid.cells)">
-      Visualize Djikstra's Algorithim
-    </button>
-    <button @click="clearBoard">Clear Board</button>
-  </nav>
+  <nav-bar @visualization="runDjikstra(grid.cells)"></nav-bar>
   <main>
     <div class="row" v-for="i in grid.rows">
       <!-- v-for is 1-indexed -->
-      <GridNode
+      <grid-node
         v-for="j in grid.cols"
         :row="grid.cells[i - 1][j - 1].row"
         :col="grid.cells[i - 1][j - 1].col"
@@ -125,7 +104,7 @@ function clearBoard() {
         :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
         :previousNode="grid.cells[i - 1][j - 1].previousNode"
         :distance="grid.cells[i - 1][j - 1].distance"
-      ></GridNode>
+      ></grid-node>
     </div>
   </main>
 </template>
