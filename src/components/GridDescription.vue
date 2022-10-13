@@ -24,9 +24,9 @@ ul {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 3rem;
+  flex-wrap: wrap;
   list-style-type: none;
-  margin: 1rem;
+  margin: 1.5rem 1rem;
 }
 
 li {
@@ -35,6 +35,7 @@ li {
   align-items: center;
   gap: 0.5rem;
   font-size: 1.1rem;
+  margin: 0.25rem 1rem;
   font-weight: bold;
   color: #eeeeee;
 }

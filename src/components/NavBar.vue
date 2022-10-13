@@ -58,6 +58,7 @@ nav {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
   gap: 1rem;
