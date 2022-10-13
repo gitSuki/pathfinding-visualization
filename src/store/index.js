@@ -18,6 +18,7 @@ export default createStore({
       },
       draggedNode: null,
       isAnimRunning: false,
+      isResultsDisplayed: false,
     };
   },
   getters: {
@@ -36,6 +37,9 @@ export default createStore({
     getAnimState(state) {
       return state.isAnimRunning;
     },
+    getIfResultsDisplayed(state) {
+      return state.isResultsDisplayed;
+    },
   },
   mutations: {
     setNewStartNode(state, payload) {
@@ -51,6 +55,9 @@ export default createStore({
     },
     setAnimState(state, payload) {
       state.isAnimRunning = payload.isAnimRunning;
+    },
+    setIfResultsDisplayed(state, payload) {
+      state.isResultsDisplayed = payload.isResultsDisplayed;
     },
   },
   actions: {
@@ -68,6 +75,9 @@ export default createStore({
     },
     animEnd(context) {
       context.commit("setAnimState", { isAnimRunning: false });
+    },
+    toggleAnimResults(context, payload) {
+      context.commit("setIfResultsDisplayed", { isResultsDisplayed: payload });
     },
   },
 });

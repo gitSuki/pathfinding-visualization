@@ -28,6 +28,7 @@ function clearBoard(clearWalls) {
         grid.cells[i][j].distance = Infinity;
       }
     }
+    store.dispatch("toggleAnimResults", false);
   }
 }
 </script>

@@ -4,6 +4,8 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
+const emit = defineEmits(["move-visualization"]);
+
 const props = defineProps({
   row: Number,
   col: Number,
@@ -21,50 +23,70 @@ const props = defineProps({
 const grid = store.getters.getGrid;
 
 function handleDragStart(row, col) {
-  if (grid.cells[row][col].isStart) {
-    store.dispatch("changeDraggedNode", "start");
-  } else if (grid.cells[row][col].isEnd) {
-    store.dispatch("changeDraggedNode", "end");
+  console.log("handleDragStart");
+  if (!store.getters.getAnimState) {
+    if (grid.cells[row][col].isStart) {
+      store.dispatch("changeDraggedNode", "start");
+    } else if (grid.cells[row][col].isEnd) {
+      store.dispatch("changeDraggedNode", "end");
+    } else {
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
   }
 }
 
 function handleDragEnter(row, col) {
-  if (store.getters.getDraggedNode === "start") {
-    grid.cells[row][col].isStart = true;
-  }
-  else if (store.getters.getDraggedNode === "end") {
-    grid.cells[row][col].isEnd = true;
+  if (!store.getters.getAnimState) {
+    if (store.getters.getDraggedNode === "start") {
+      grid.cells[row][col].isStart = true;
+    } else if (store.getters.getDraggedNode === "end") {
+      grid.cells[row][col].isEnd = true;
+    } else {
+      grid.cells[row][col].isVisitedAnim = false;
+      grid.cells[row][col].isShortestPathAnim = false;
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
+    //
+    if (store.getters.getIfResultsDisplayed) {
+      emit("move-visualization");
+    }
   }
 }
 
 function handleDragLeave(row, col) {
-  console.log(row, col)
-  if (store.getters.getDraggedNode === "start") {
-    grid.cells[row][col].isStart = false;
-  }
-  else if (store.getters.getDraggedNode === "end") {
-    grid.cells[row][col].isEnd = false;
+  if (!store.getters.getAnimState) {
+    if (store.getters.getDraggedNode === "start") {
+      grid.cells[row][col].isStart = false;
+    } else if (store.getters.getDraggedNode === "end") {
+      grid.cells[row][col].isEnd = false;
+    }
   }
 }
 
 function handleDragEnd(row, col) {
   // only effects original node where drag started from
-  store.dispatch("changeDraggedNode", null);
-  if (store.getters.getDraggedNode === "start") {
-    grid.cells[row][col].isStart = false;
-  }
-  else if (store.getters.getDraggedNode === "end") {
-    grid.cells[row][col].isEnd = false;
+  console.log("handleDragEnd");
+  if (!store.getters.getAnimState) {
+    if (store.getters.getDraggedNode === "start") {
+      grid.cells[row][col].isStart = false;
+    } else if (store.getters.getDraggedNode === "end") {
+      grid.cells[row][col].isEnd = false;
+    }
+    store.dispatch("changeDraggedNode", null);
   }
 }
 
 function handleDragDrop(row, col) {
   // effects the node where the mouse is hovered over
-  if (store.getters.getDraggedNode === "start") {
-    store.dispatch("changeStartNode", { row: row, col: col });
-  }
-  else if (store.getters.getDraggedNode === "end") {
-    store.dispatch("changeEndNode", { row: row, col: col });
+  console.log("handleDragDrop");
+  if (!store.getters.getAnimState) {
+    if (store.getters.getDraggedNode === "start") {
+      store.dispatch("changeStartNode", { row: row, col: col });
+    } else if (store.getters.getDraggedNode === "end") {
+      store.dispatch("changeEndNode", { row: row, col: col });
+    } else {
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
   }
 }
 </script>
@@ -118,7 +140,7 @@ div {
 
 .wall-node {
   background-color: #15181a;
-  animation: 500ms forwards wall-anim;
+  /* animation: 500ms forwards wall-anim; */
 }
 
 @keyframes visited-anim {

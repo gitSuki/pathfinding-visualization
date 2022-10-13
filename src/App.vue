@@ -67,6 +67,7 @@ function animateDjikstra(visitedNodesInOrder, shortestPath) {
     if (i === visitedNodesInOrder.length - 1) {
       setTimeout(() => {
         animateShortestPath(shortestPath);
+        store.dispatch("toggleAnimResults", true);
       }, 15 * i);
     }
     setTimeout(() => {
@@ -86,6 +87,12 @@ function animateShortestPath(shortestPath) {
     }, 25 * i);
   }
 }
+
+//
+function visualizationByMove() {
+  console.log('hi')
+  runDjikstra(grid.cells);
+}
 </script>
 
 <template>
@@ -96,6 +103,7 @@ function animateShortestPath(shortestPath) {
       <!-- v-for is 1-indexed -->
       <grid-node
         v-for="j in grid.cols"
+        @move-visualization="visualizationByMove"
         :row="grid.cells[i - 1][j - 1].row"
         :col="grid.cells[i - 1][j - 1].col"
         :isStart="grid.cells[i - 1][j - 1].isStart"
