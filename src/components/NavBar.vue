@@ -63,9 +63,11 @@ nav {
   gap: 1rem;
   background-color: #4f5153;
   color: #eeeeee;
+  box-shadow: 0 7px 30px rgba(0, 0, 0, 0.15);
 }
 
 button {
+  cursor: pointer;
   border: none;
   border-radius: 5px;
   padding: 0.75rem 1.5rem;
@@ -76,6 +78,7 @@ button {
   background-color: #00adb5;
   font-weight: bold;
   transition: 250ms linear all;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
 .visualize-btn:hover {

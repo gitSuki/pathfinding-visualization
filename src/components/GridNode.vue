@@ -76,17 +76,19 @@ div {
   background-color: red;
 }
 
-.wall-node {
-  background-color: #15181a;
-  animation: 500ms forwards wall-anim;
-}
-
 .visited-node {
+  background-color: #00adb5;
   animation: 2000ms ease-out forwards visited-anim;
 }
 
 .shortest-path-node {
+  background-color: rgb(207, 66, 66);
   animation: 1000ms ease-out forwards shortest-path-anim;
+}
+
+.wall-node {
+  background-color: #15181a;
+  animation: 500ms forwards wall-anim;
 }
 
 @keyframes visited-anim {
@@ -138,7 +140,7 @@ div {
 
   100% {
     transform: scale(1);
-    background-color: #eeeeee;
+    background-color: rgb(207, 66, 66);
   }
 }
 </style>

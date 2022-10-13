@@ -1,6 +1,7 @@
 <script setup>
 import { useStore } from "vuex";
 import NavBar from "./components/NavBar.vue";
+import GridDescription from "./components/GridDescription.vue";
 import GridNode from "./components/GridNode.vue";
 import djikstrasAlgo from "./algorithims/djikstra.js";
 
@@ -89,6 +90,7 @@ function animateShortestPath(shortestPath) {
 
 <template>
   <nav-bar @visualization="runDjikstra(grid.cells)"></nav-bar>
+  <grid-description></grid-description>
   <main>
     <div class="row" v-for="i in grid.rows">
       <!-- v-for is 1-indexed -->
