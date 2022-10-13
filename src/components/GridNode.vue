@@ -4,8 +4,6 @@ import { useStore } from "vuex";
 
 const store = useStore();
 
-const emit = defineEmits(["move-visualization"]);
-
 const props = defineProps({
   row: Number,
   col: Number,
@@ -15,6 +13,7 @@ const props = defineProps({
   isVisited: Boolean,
   isVisitedAnim: Boolean,
   isShortestPathAnim: Boolean,
+  isBeingDragged: Boolean,
   previousNode: null,
   distance: null,
 });
@@ -23,11 +22,12 @@ const props = defineProps({
 const grid = store.getters.getGrid;
 
 function handleDragStart(row, col) {
-  console.log("handleDragStart");
-  if (!store.getters.getAnimState) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (grid.cells[row][col].isStart) {
+      grid.cells[row][col].isBeingDragged = true;
       store.dispatch("changeDraggedNode", "start");
     } else if (grid.cells[row][col].isEnd) {
+      grid.cells[row][col].isBeingDragged = true;
       store.dispatch("changeDraggedNode", "end");
     } else {
       grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
@@ -36,25 +36,24 @@ function handleDragStart(row, col) {
 }
 
 function handleDragEnter(row, col) {
-  if (!store.getters.getAnimState) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (store.getters.getDraggedNode === "start") {
       grid.cells[row][col].isStart = true;
     } else if (store.getters.getDraggedNode === "end") {
       grid.cells[row][col].isEnd = true;
-    } else {
+    } else if (
+      grid.cells[row][col].isStart === false &&
+      grid.cells[row][col].isEnd === false
+    ) {
       grid.cells[row][col].isVisitedAnim = false;
       grid.cells[row][col].isShortestPathAnim = false;
       grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
-    }
-    //
-    if (store.getters.getIfResultsDisplayed) {
-      emit("move-visualization");
     }
   }
 }
 
 function handleDragLeave(row, col) {
-  if (!store.getters.getAnimState) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (store.getters.getDraggedNode === "start") {
       grid.cells[row][col].isStart = false;
     } else if (store.getters.getDraggedNode === "end") {
@@ -65,12 +64,13 @@ function handleDragLeave(row, col) {
 
 function handleDragEnd(row, col) {
   // only effects original node where drag started from
-  console.log("handleDragEnd");
-  if (!store.getters.getAnimState) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (store.getters.getDraggedNode === "start") {
       grid.cells[row][col].isStart = false;
+      grid.cells[row][col].isBeingDragged = false;
     } else if (store.getters.getDraggedNode === "end") {
       grid.cells[row][col].isEnd = false;
+      grid.cells[row][col].isBeingDragged = false;
     }
     store.dispatch("changeDraggedNode", null);
   }
@@ -78,8 +78,7 @@ function handleDragEnd(row, col) {
 
 function handleDragDrop(row, col) {
   // effects the node where the mouse is hovered over
-  console.log("handleDragDrop");
-  if (!store.getters.getAnimState) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (store.getters.getDraggedNode === "start") {
       store.dispatch("changeStartNode", { row: row, col: col });
     } else if (store.getters.getDraggedNode === "end") {
@@ -89,6 +88,13 @@ function handleDragDrop(row, col) {
     }
   }
 }
+
+// removes the ghost image effect while dragging
+document.addEventListener("dragstart", function( event ) {
+    var img = new Image();
+    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    event.dataTransfer.setDragImage(img, 0, 0);
+}, false);
 </script>
 
 <template>
@@ -106,6 +112,7 @@ function handleDragDrop(row, col) {
       'wall-node': isWall,
       'visited-node': isVisitedAnim,
       'shortest-path-node': isShortestPathAnim,
+      hide: isBeingDragged,
     }"
   ></div>
 </template>
@@ -117,6 +124,7 @@ div {
   outline: 1px solid #4f5153;
   display: inline-block;
   transition: 500ms linear all;
+  cursor: grab !important;
 }
 
 .start-node {
@@ -141,6 +149,10 @@ div {
 .wall-node {
   background-color: #15181a;
   /* animation: 500ms forwards wall-anim; */
+}
+
+.hide {
+  background-color: #ffffff;
 }
 
 @keyframes visited-anim {

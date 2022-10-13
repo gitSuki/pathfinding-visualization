@@ -33,6 +33,7 @@ function createGridNodeObject(row, col) {
     isVisited: false,
     isVisitedAnim: false,
     isShortestPathAnim: false,
+    isBeingDragged: false,
     previousNode: null,
     distance: Infinity,
   };
@@ -87,12 +88,6 @@ function animateShortestPath(shortestPath) {
     }, 25 * i);
   }
 }
-
-//
-function visualizationByMove() {
-  console.log('hi')
-  runDjikstra(grid.cells);
-}
 </script>
 
 <template>
@@ -103,7 +98,6 @@ function visualizationByMove() {
       <!-- v-for is 1-indexed -->
       <grid-node
         v-for="j in grid.cols"
-        @move-visualization="visualizationByMove"
         :row="grid.cells[i - 1][j - 1].row"
         :col="grid.cells[i - 1][j - 1].col"
         :isStart="grid.cells[i - 1][j - 1].isStart"
@@ -112,6 +106,7 @@ function visualizationByMove() {
         :isVisited="grid.cells[i - 1][j - 1].isVisited"
         :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
         :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
+        :isBeingDragged="grid.cells[i - 1][j - 1].isBeingDragged"
         :previousNode="grid.cells[i - 1][j - 1].previousNode"
         :distance="grid.cells[i - 1][j - 1].distance"
       ></grid-node>
