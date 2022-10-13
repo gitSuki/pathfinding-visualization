@@ -6,15 +6,15 @@ export default createStore({
       grid: {
         cells: [],
         rows: 20,
-        cols: 50,
+        cols: Math.round(screen.width / 27.5),
       },
       startNode: {
         row: 9,
-        col: 9,
+        col: Math.round((screen.width / 30) * 0.2),
       },
       endNode: {
         row: 9,
-        col: 39,
+        col: Math.round((screen.width / 30) * 0.8),
       },
       draggedNode: null,
       isAnimRunning: false,

@@ -132,7 +132,7 @@ body {
 }
 
 main {
-  max-width: 1200px;
+  max-width: 1600px;
   margin: 0 auto;
   padding-left: 7.5px;
   padding-right: 7.5px;
