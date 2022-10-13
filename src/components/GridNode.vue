@@ -18,8 +18,21 @@ const props = defineProps({
   distance: null,
 });
 
-// dragging functionality for walls and and start/end nodes
+// clicking and dragging functionality for walls and and start/end nodes
 const grid = store.getters.getGrid;
+
+function handleClick(row, col) {
+  if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
+    if (
+      grid.cells[row][col].isStart === false &&
+      grid.cells[row][col].isEnd === false
+    ) {
+      grid.cells[row][col].isVisitedAnim = false;
+      grid.cells[row][col].isShortestPathAnim = false;
+      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
+    }
+  }
+}
 
 function handleDragStart(row, col) {
   if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
@@ -90,15 +103,21 @@ function handleDragDrop(row, col) {
 }
 
 // removes the ghost image effect while dragging
-document.addEventListener("dragstart", function( event ) {
+document.addEventListener(
+  "dragstart",
+  function (event) {
     var img = new Image();
-    img.src = 'data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=';
+    img.src =
+      "data:image/gif;base64,R0lGODlhAQABAIAAAAUEBAAAACwAAAAAAQABAAACAkQBADs=";
     event.dataTransfer.setDragImage(img, 0, 0);
-}, false);
+  },
+  false
+);
 </script>
 
 <template>
   <div
+    @click="handleClick(row, col)"
     @dragstart="handleDragStart(row, col)"
     @dragenter.prevent="handleDragEnter(row, col)"
     @dragleave.prevent="handleDragLeave(row, col)"
