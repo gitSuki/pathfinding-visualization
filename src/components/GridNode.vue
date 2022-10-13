@@ -18,46 +18,53 @@ const props = defineProps({
 });
 
 // dragging functionality for walls and and start/end nodes
-function handleDragStart(row, col) {
-  const grid = store.getters.getGrid;
+const grid = store.getters.getGrid;
 
+function handleDragStart(row, col) {
   if (grid.cells[row][col].isStart) {
     store.dispatch("changeDraggedNode", "start");
+  } else if (grid.cells[row][col].isEnd) {
+    store.dispatch("changeDraggedNode", "end");
   }
 }
 
 function handleDragEnter(row, col) {
-  const grid = store.getters.getGrid;
-
   if (store.getters.getDraggedNode === "start") {
     grid.cells[row][col].isStart = true;
+  }
+  else if (store.getters.getDraggedNode === "end") {
+    grid.cells[row][col].isEnd = true;
   }
 }
 
 function handleDragLeave(row, col) {
-  const grid = store.getters.getGrid;
-
+  console.log(row, col)
   if (store.getters.getDraggedNode === "start") {
     grid.cells[row][col].isStart = false;
+  }
+  else if (store.getters.getDraggedNode === "end") {
+    grid.cells[row][col].isEnd = false;
   }
 }
 
 function handleDragEnd(row, col) {
   // only effects original node where drag started from
-  // const grid = store.getters.getGrid;
-  // if (store.getters.getDraggedNode === "start") {
-  //   grid.cells[row][col].isStart = false;
-  // }
-
   store.dispatch("changeDraggedNode", null);
+  if (store.getters.getDraggedNode === "start") {
+    grid.cells[row][col].isStart = false;
+  }
+  else if (store.getters.getDraggedNode === "end") {
+    grid.cells[row][col].isEnd = false;
+  }
 }
 
 function handleDragDrop(row, col) {
   // effects the node where the mouse is hovered over
-  const grid = store.getters.getGrid;
-
   if (store.getters.getDraggedNode === "start") {
     store.dispatch("changeStartNode", { row: row, col: col });
+  }
+  else if (store.getters.getDraggedNode === "end") {
+    store.dispatch("changeEndNode", { row: row, col: col });
   }
 }
 </script>
