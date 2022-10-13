@@ -17,39 +17,60 @@ const props = defineProps({
   distance: null,
 });
 
-// click and drag functionality
-function handleMouseDown(row, col) {
-  // disables if animation is running
-  if (!store.getters.getAnimState) {
-    const grid = store.getters.getGrid;
-    if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
-      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
-    }
-    store.dispatch("clickHold");
+// dragging functionality for walls and and start/end nodes
+function handleDragStart(row, col) {
+  const grid = store.getters.getGrid;
+
+  if (grid.cells[row][col].isStart) {
+    store.dispatch("changeDraggedNode", "start");
   }
 }
 
-function handleMouseEnter(row, col) {
-  // disables if mouse is not held or animation is running
-  if (store.getters.getMouseState && !store.getters.getAnimState) {
-    const grid = store.getters.getGrid;
-    if (!grid.cells[row][col].isStart && !grid.cells[row][col].isEnd) {
-      grid.cells[row][col].isWall = !grid.cells[row][col].isWall;
-    }
+function handleDragEnter(row, col) {
+  const grid = store.getters.getGrid;
+
+  if (store.getters.getDraggedNode === "start") {
+    grid.cells[row][col].isStart = true;
   }
 }
 
-addEventListener("mouseup", () => {
-  // global event listener to handle case if user releases mouse
-  // outside of grid
-  store.dispatch("clickRelease");
-});
+function handleDragLeave(row, col) {
+  const grid = store.getters.getGrid;
+
+  if (store.getters.getDraggedNode === "start") {
+    grid.cells[row][col].isStart = false;
+  }
+}
+
+function handleDragEnd(row, col) {
+  // only effects original node where drag started from
+  // const grid = store.getters.getGrid;
+  // if (store.getters.getDraggedNode === "start") {
+  //   grid.cells[row][col].isStart = false;
+  // }
+
+  store.dispatch("changeDraggedNode", null);
+}
+
+function handleDragDrop(row, col) {
+  // effects the node where the mouse is hovered over
+  const grid = store.getters.getGrid;
+
+  if (store.getters.getDraggedNode === "start") {
+    store.dispatch("changeStartNode", { row: row, col: col });
+  }
+}
 </script>
 
 <template>
   <div
-    @mousedown="handleMouseDown(row, col)"
-    @mouseenter="handleMouseEnter(row, col)"
+    @dragstart="handleDragStart(row, col)"
+    @dragenter.prevent="handleDragEnter(row, col)"
+    @dragleave.prevent="handleDragLeave(row, col)"
+    @dragover.prevent
+    @dragend.prevent="handleDragEnd(row, col)"
+    @drop="handleDragDrop(row, col)"
+    :draggable="true"
     :class="{
       'start-node': isStart,
       'end-node': isEnd,

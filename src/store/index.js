@@ -16,7 +16,7 @@ export default createStore({
         row: 9,
         col: 39,
       },
-      isMousePressed: false,
+      draggedNode: null,
       isAnimRunning: false,
     };
   },
@@ -30,27 +30,38 @@ export default createStore({
     getEndNode(state) {
       return state.endNode;
     },
-    getMouseState(state) {
-      return state.isMousePressed;
+    getDraggedNode(state) {
+      return state.draggedNode;
     },
     getAnimState(state) {
-      return state.isAnimRunning
-    }
+      return state.isAnimRunning;
+    },
   },
   mutations: {
-    setMouseState(state, payload) {
-      state.isMousePressed = payload.isMousePressed;
+    setNewStartNode(state, payload) {
+      state.startNode.row = payload.row;
+      state.startNode.col = payload.col;
+    },
+    setNewEndNode(state, payload) {
+      state.endNode.row = payload.row;
+      state.endNode.col = payload.col;
+    },
+    setDraggedNode(state, payload) {
+      state.draggedNode = payload.draggedNode;
     },
     setAnimState(state, payload) {
-      state.isAnimRunning = payload.  isAnimRunning;
-    }
+      state.isAnimRunning = payload.isAnimRunning;
+    },
   },
   actions: {
-    clickHold(context) {
-      context.commit("setMouseState", { isMousePressed: true });
+    changeStartNode(context, payload) {
+      context.commit("setNewStartNode", { row: payload.row, col: payload.col });
     },
-    clickRelease(context) {
-      context.commit("setMouseState", { isMousePressed: false });
+    changeEndNode(context, payload) {
+      context.commit("setNewEndNode", { row: payload.row, col: payload.col });
+    },
+    changeDraggedNode(context, payload) {
+      context.commit("setDraggedNode", { draggedNode: payload });
     },
     animRun(context) {
       context.commit("setAnimState", { isAnimRunning: true });
