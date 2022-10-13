@@ -70,10 +70,12 @@ div {
 }
 
 .start-node {
-  background-color: blue;
+  background-image: url("../assets/start.svg");
+  background-size: 100%;
 }
 .end-node {
-  background-color: red;
+  background-image: url("../assets/target.svg");
+  background-size: 100%;
 }
 
 .visited-node {

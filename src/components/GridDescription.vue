@@ -1,19 +1,25 @@
 <script setup>
 import GridNode from "./GridNode.vue";
-
 </script>
 
 <template>
   <ul>
-    <li><grid-node></grid-node>Start Node</li>
-    <li><grid-node></grid-node>Target Node</li>
-    <li><grid-node :is-visited-anim="true" class="no-anim"></grid-node>Visited Node</li>
-    <li><grid-node :is-shortest-path-anim="true" class="no-anim"></grid-node>Shortest-path Node</li>
-    <li><grid-node :is-wall="true" class="no-anim"></grid-node>Wall Node</li>
+    <li><grid-node :is-start="true"></grid-node>Start Node</li>
+    <li><grid-node :is-end="true"></grid-node>Target Node</li>
+    <li><grid-node :is-visited-anim="true"></grid-node>Visited Node</li>
+    <li>
+      <grid-node :is-shortest-path-anim="true"></grid-node>Shortest-path Node
+    </li>
+    <li><grid-node :is-wall="true"></grid-node>Wall Node</li>
   </ul>
 </template>
 
-<style>
+<style scoped>
+* {
+  outline: none !important;
+  animation: none !important;
+}
+
 ul {
   display: flex;
   justify-content: center;
@@ -31,9 +37,5 @@ li {
   font-size: 1.1rem;
   font-weight: bold;
   color: #eeeeee;
-}
-
-.no-anim {
-  animation: none !important;
 }
 </style>
