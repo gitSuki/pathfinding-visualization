@@ -40,6 +40,12 @@ function createGridNodeObject(row, col) {
 }
 
 // running algorithims
+function runAlgo(grid, algoOption) {
+  if (algoOption === "djikstra") {
+    runDjikstra(grid);
+  }
+}
+
 function runDjikstra(grid) {
   store.dispatch("animRun");
   const startNode =
@@ -91,7 +97,7 @@ function animateShortestPath(shortestPath) {
 </script>
 
 <template>
-  <nav-bar @visualization="runDjikstra(grid.cells)"></nav-bar>
+  <nav-bar @visualization="runAlgo"></nav-bar>
   <grid-description></grid-description>
   <main>
     <div class="row" v-for="i in grid.rows">

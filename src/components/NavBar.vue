@@ -5,12 +5,19 @@ import { useStore } from "vuex";
 const store = useStore();
 const emit = defineEmits(["visualization"]);
 
+const props = defineProps({
+  algoOption: {
+    type: String,
+    default: "djikstra",
+  },
+});
+
 const isAnimActive = computed(() => store.getters.getAnimState);
 
-function runVisualization() {
+function runVisualization(algoOption) {
   // automatically clears the board of everything except walls
   clearBoard(false);
-  emit("visualization");
+  emit("visualization", store.getters.getGrid.cells, algoOption);
 }
 
 function clearBoard(clearWalls) {
@@ -36,9 +43,12 @@ function clearBoard(clearWalls) {
 <template>
   <nav>
     <h1>Pathfinding Visualization</h1>
-    <div></div>
+    <select v-model="algoOption" name="algorithm" id="algorithm">
+      <option value="djikstra">Djikstra's</option>
+      <option value="astar">A* Search</option>
+    </select>
     <button
-      @click="runVisualization"
+      @click="runVisualization(algoOption)"
       class="visualize-btn"
       :class="{ 'disabled-btn': isAnimActive }"
     >
