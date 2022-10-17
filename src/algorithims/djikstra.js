@@ -1,3 +1,5 @@
+import { getUnvisitedNeighbors } from "./helper.js";
+
 export default function djikstrasAlgo(grid, startNode, finishNode) {
   // returns a list of all visited nodes in the order they were visited
   // all other nodes besides the startNode have their distance set to infinity
@@ -34,23 +36,4 @@ function updateUnvisitedNeighbors(node, grid) {
     unvisitedNeighbors[i].distance = node.distance + 1; // add weighting here
     unvisitedNeighbors[i].previousNode = node;
   }
-}
-
-function getUnvisitedNeighbors(node, grid) {
-  const neighbors = [];
-  const { col, row } = node;
-  // checking all neighboring nodes to see if they're valid
-  // if so they are  added to the array
-  if (row > 0 && !grid[row - 1][col].isVisited)
-    neighbors.push(grid[row - 1][col]);
-
-  if (row < grid.length - 1 && !grid[row + 1][col].isVisited)
-    neighbors.push(grid[row + 1][col]);
-
-  if (col > 0 && !grid[row][col - 1].isVisited)
-    neighbors.push(grid[row][col - 1]);
-
-  if (col < grid[0].length - 1 && !grid[row][col + 1].isVisited)
-    neighbors.push(grid[row][col + 1]);
-  return neighbors;
 }
