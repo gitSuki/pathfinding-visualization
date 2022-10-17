@@ -57,7 +57,8 @@ function runAlgo(grid, algoOption) {
 }
 
 function runAstar(grid, startNode, endNode) {
-  astarAlgo(grid, startNode, endNode)
+  const closedSet = astarAlgo(grid, startNode, endNode)
+  console.log(closedSet)
 }
 
 

@@ -3,6 +3,12 @@ import { getUnvisitedNeighbors } from "./helper.js";
 export default function aStar(grid, startNode, finishNode) {
   // returns a list of all visited nodes in the order they were visited
   // all other nodes besides the startNode have their distance set to infinity
+
+  // gScore = distance travelled from start to current cell
+  // fScore = gScore + estimated remaining distance to finishNode
+  // closedSet = the set of nodes that have been traversed
+  // openSet = the set of discovered nodes that haven't been traversed yet
+  // and are sorted by fScore
   let closedSet = [];
   let openSet = [];
   startNode.distance = 0;
@@ -12,12 +18,12 @@ export default function aStar(grid, startNode, finishNode) {
 
   while (openSet.length > 0) {
     let currNode = findClosest(openSet);
-    if (currNode === finishNode) return visitedNodesInOrder;
-    // openSet = removeFromArray(currNode, openSet);
+    if (currNode === finishNode) return closedSet;
 
+    openSet = removeNodeFromArray(currNode, openSet);
     if (currNode.isWall) continue;
     currNode.isVisited = true;
-    updateNeighbors(currNode, grid);
+    updateNeighbors(currNode, grid, openSet, closedSet, finishNode);
     closedSet.push(currNode);
   }
 }
@@ -46,14 +52,44 @@ function findClosest(openSet) {
   return curr;
 }
 
-// function removeFromArray(currNode, openSet) {
-//   console.log(openSet);
-//   const newSet = openSet.filter((node) => node !== currNode);
-//   console.log(newSet);
-//   return newSet;
-// }
+function removeNodeFromArray(nodeToRemove, openList) {
+  return openList.filter(node => node !== nodeToRemove)
+}
 
-function updateNeighbors(node, grid) {
-  const neighbors = getUnvisitedNeighbors(node, grid);
-  console.log(neighbors)
+function updateNeighbors(node, grid, openSet, closedSet, finishNode) {
+  let neighbors = getUnvisitedNeighbors(node, grid);
+
+  // looping through neighbors array
+  for (let neighbour of neighbors) {
+    if (!closedSet.includes(neighbour)) {
+      console.log(node.distance)
+      let temp = node.distance + 1;
+      let newPath = false;
+      if (openSet.includes(neighbour)) {
+        if (temp < neighbour.distance) {
+          neighbour.distance = temp;
+          newPath = true;
+        }
+
+        openSet.push(neighbour);
+      } else {
+        neighbour.distance = temp;
+        openSet.push(neighbour);
+        newPath = true;
+      }
+
+      if (newPath) {
+        neighbour.heuristic = manhattanDistance(neighbour, finishNode);
+        neighbour.totalDistance = neighbour.distance + neighbour.heuristic;
+        neighbour.previousNode = node;
+      }
+    }
+  }
+}
+
+function manhattanDistance(nodeOne, nodeTwo) {
+  let x = Math.abs(nodeOne.row - nodeTwo.row);
+  let y = Math.abs(nodeOne.col - nodeTwo.col);
+
+  return x + y;
 }
