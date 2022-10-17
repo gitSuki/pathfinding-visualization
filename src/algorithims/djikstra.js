@@ -1,5 +1,5 @@
 export default function djikstrasAlgo(grid, startNode, finishNode) {
-  // returns a list of all visited nodes in order
+  // returns a list of all visited nodes in the order they were visited
   // all other nodes besides the startNode have their distance set to infinity
   startNode.distance = 0;
   const visitedNodesInOrder = [];

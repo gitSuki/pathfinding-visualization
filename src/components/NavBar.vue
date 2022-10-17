@@ -8,7 +8,7 @@ const emit = defineEmits(["visualization"]);
 const props = defineProps({
   algoOption: {
     type: String,
-    default: "djikstra",
+    default: "astar",
   },
 });
 

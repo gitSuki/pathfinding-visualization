@@ -3,6 +3,7 @@ import { useStore } from "vuex";
 import NavBar from "./components/NavBar.vue";
 import GridDescription from "./components/GridDescription.vue";
 import GridNode from "./components/GridNode.vue";
+import astarAlgo from "./algorithims/astar.js";
 import djikstrasAlgo from "./algorithims/djikstra.js";
 
 const store = useStore();
@@ -41,17 +42,26 @@ function createGridNodeObject(row, col) {
 
 // running algorithims
 function runAlgo(grid, algoOption) {
-  if (algoOption === "djikstra") {
-    runDjikstra(grid);
-  }
-}
-
-function runDjikstra(grid) {
   store.dispatch("animRun");
   const startNode =
     grid[store.getters.getStartNode.row][store.getters.getStartNode.col];
   const endNode =
     grid[store.getters.getEndNode.row][store.getters.getEndNode.col];
+
+  if (algoOption === "djikstra") {
+    runDjikstra(grid, startNode, endNode);
+  }
+  else {
+    runAstar(grid, startNode, endNode)
+  }
+}
+
+function runAstar(grid, startNode, endNode) {
+  astarAlgo(grid, startNode, endNode)
+}
+
+
+function runDjikstra(grid, startNode, endNode) {
   const visitedNodesInOrder = djikstrasAlgo(grid, startNode, endNode);
   const shortestPath = findShortestPath(endNode);
   animateDjikstra(visitedNodesInOrder, shortestPath);
