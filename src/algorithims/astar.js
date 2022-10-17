@@ -4,15 +4,12 @@ export default function aStar(grid, startNode, finishNode) {
   // returns a list of all visited nodes in the order they were visited
   // all other nodes besides the startNode have their distance set to infinity
 
-  // gScore = distance travelled from start to current cell
-  // fScore = gScore + estimated remaining distance to finishNode
   // closedSet = the set of nodes that have been traversed
   // openSet = the set of discovered nodes that haven't been traversed yet
-  // and are sorted by fScore
   let closedSet = [];
   let openSet = [];
   startNode.distance = 0;
-  startNode.heuristic = 0;
+  startNode.manhattanDistance = 0;
   startNode.totalDistance = 0;
   openSet.push(startNode);
 
@@ -23,7 +20,7 @@ export default function aStar(grid, startNode, finishNode) {
     openSet = removeNodeFromArray(currNode, openSet);
     if (currNode.isWall) continue;
     currNode.isVisited = true;
-    updateNeighbors(currNode, grid, openSet, closedSet, finishNode);
+    updateNeighbors(currNode, grid, openSet, finishNode);
     closedSet.push(currNode);
   }
 }
@@ -39,10 +36,10 @@ function findClosest(openSet) {
       closestNodeIndex = i;
     }
     // if curr and openSet are the same distance, but curr's
-    // heuristic is farther away than openSet[i]'s
+    // manhattanDistance is farther away than openSet[i]'s
     else if (
       curr.totalDistance === openSet[i].totalDistance &&
-      curr.heuristic > openSet[i].heuristic
+      curr.manhattanDistance > openSet[i].manhattanDistance
     ) {
       curr = openSet[i];
       closestNodeIndex = i;
@@ -53,43 +50,37 @@ function findClosest(openSet) {
 }
 
 function removeNodeFromArray(nodeToRemove, openList) {
-  return openList.filter(node => node !== nodeToRemove)
+  return openList.filter((node) => node !== nodeToRemove);
 }
 
-function updateNeighbors(node, grid, openSet, closedSet, finishNode) {
+function updateNeighbors(node, grid, openSet, finishNode) {
   let neighbors = getUnvisitedNeighbors(node, grid);
-
-  // looping through neighbors array
-  for (let neighbour of neighbors) {
-    if (!closedSet.includes(neighbour)) {
-      console.log(node.distance)
-      let temp = node.distance + 1;
-      let newPath = false;
-      if (openSet.includes(neighbour)) {
-        if (temp < neighbour.distance) {
-          neighbour.distance = temp;
-          newPath = true;
-        }
-
-        openSet.push(neighbour);
-      } else {
-        neighbour.distance = temp;
-        openSet.push(neighbour);
+  // looping through array of unvisited neighbors
+  for (let neighbor of neighbors) {
+    const newDistance = node.distance + 1;
+    let newPath = false;
+    if (openSet.includes(neighbor)) {
+      if (newDistance < neighbor.distance) {
+        neighbor.distance = newDistance;
         newPath = true;
       }
+      openSet.push(neighbor);
+    } else {
+      neighbor.distance = newDistance;
+      openSet.push(neighbor);
+      newPath = true;
+    }
 
-      if (newPath) {
-        neighbour.heuristic = manhattanDistance(neighbour, finishNode);
-        neighbour.totalDistance = neighbour.distance + neighbour.heuristic;
-        neighbour.previousNode = node;
-      }
+    if (newPath) {
+      neighbor.manhattanDistance = calculateManhattanDistance(neighbor, finishNode);
+      neighbor.totalDistance = neighbor.distance + neighbor.manhattanDistance;
+      neighbor.previousNode = node;
     }
   }
 }
 
-function manhattanDistance(nodeOne, nodeTwo) {
-  let x = Math.abs(nodeOne.row - nodeTwo.row);
-  let y = Math.abs(nodeOne.col - nodeTwo.col);
-
-  return x + y;
+function calculateManhattanDistance(nodeOne, nodeTwo) {
+  const xDistance = Math.abs(nodeOne.row - nodeTwo.row);
+  const yDistance = Math.abs(nodeOne.col - nodeTwo.col);
+  return xDistance + yDistance;
 }

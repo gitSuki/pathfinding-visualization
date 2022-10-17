@@ -50,35 +50,34 @@ function runAlgo(grid, algoOption) {
 
   if (algoOption === "djikstra") {
     runDjikstra(grid, startNode, endNode);
-  }
-  else {
-    runAstar(grid, startNode, endNode)
+  } else {
+    runAstar(grid, startNode, endNode);
   }
 }
 
 function runAstar(grid, startNode, endNode) {
-  const closedSet = astarAlgo(grid, startNode, endNode)
-  console.log(closedSet)
+  const closedSet = astarAlgo(grid, startNode, endNode);
+  const shortestPath = findShortestPath(endNode);
+  animateAlgo(closedSet, shortestPath);
 }
-
 
 function runDjikstra(grid, startNode, endNode) {
   const visitedNodesInOrder = djikstrasAlgo(grid, startNode, endNode);
   const shortestPath = findShortestPath(endNode);
-  animateDjikstra(visitedNodesInOrder, shortestPath);
+  animateAlgo(visitedNodesInOrder, shortestPath);
 }
 
 function findShortestPath(endNode) {
   const shortestPath = [];
-  let currentNode = endNode;
-  while (currentNode !== null) {
-    shortestPath.unshift(currentNode);
-    currentNode = currentNode.previousNode;
+  let currNode = endNode;
+  while (currNode !== null) {
+    shortestPath.unshift(currNode);
+    currNode = currNode.previousNode;
   }
   return shortestPath;
 }
 
-function animateDjikstra(visitedNodesInOrder, shortestPath) {
+function animateAlgo(visitedNodesInOrder, shortestPath) {
   // creates the delayed animation effect that shows all the nodes
   // that djikstras algo visited in order
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
