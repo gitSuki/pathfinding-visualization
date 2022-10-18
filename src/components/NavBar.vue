@@ -5,13 +5,7 @@ import { useStore } from "vuex";
 const store = useStore();
 const emit = defineEmits(["visualization"]);
 
-const props = defineProps({
-  algoOption: {
-    type: String,
-    default: "astar",
-  },
-});
-
+// logic for locking the navbar while animation is playing
 const isAnimActive = computed(() => store.getters.getAnimState);
 
 function runVisualization(algoOption) {
@@ -38,15 +32,17 @@ function clearBoard(clearWalls) {
     store.dispatch("toggleAnimResults", false);
   }
 }
+
+// logic for selecting which animation to play
+let algoOption = "Hello World";
 </script>
 
 <template>
   <nav>
     <h1>Pathfinding Visualization</h1>
-    <select v-model="algoOption" name="algorithm" id="algorithm">
-      <option value="djikstra">Djikstra's</option>
-      <option value="astar">A* Search</option>
-    </select>
+    <button class="select-btn">
+      {{ algoOption }} <font-awesome-icon icon="fa-solid fa-chevron-down" />
+    </button>
     <button
       @click="runVisualization(algoOption)"
       class="visualize-btn"
@@ -86,6 +82,11 @@ button {
   font-size: 1.25rem;
   color: #eeeeee;
 }
+
+.select-btn {
+  color: #111111;
+}
+
 .visualize-btn {
   background-color: #64748b;
   font-weight: bold;
