@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from "vue";
+import { ref, computed } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -34,15 +34,42 @@ function clearBoard(clearWalls) {
 }
 
 // logic for selecting which animation to play
-let algoOption = "Hello World";
+const algoOption = ref("astar");
+
+const algoOptionDisplayText = computed(() => {
+  if (algoOption.value === "astar") {
+    return "A* Search";
+  } else if (algoOption.value === "djikstra") {
+    return "Djikstra";
+  }
+});
+
+const chevronStatus = computed(() =>
+  store.getters.getIfDropdownDisplayed
+    ? "fa-solid fa-chevron-up"
+    : "fa-solid fa-chevron-down"
+);
+
+function toggleAlgoList() {
+  store.dispatch("toggleDropdown", !store.getters.getIfDropdownDisplayed);
+}
+
+function changeSelectedAlgo(newAlgo) {
+  console.log(algoOption);
+  algoOption.value = newAlgo;
+}
 </script>
 
 <template>
   <nav>
     <h1>Pathfinding Visualization</h1>
-    <button class="select-btn">
-      {{ algoOption }} <font-awesome-icon icon="fa-solid fa-chevron-down" />
+    <button class="select-btn" @click="toggleAlgoList">
+      {{ algoOptionDisplayText }} <font-awesome-icon :icon="chevronStatus" />
     </button>
+    <ul v-if="store.getters.getIfDropdownDisplayed">
+      <li @click="changeSelectedAlgo('astar')">A* Search</li>
+      <li @click="changeSelectedAlgo('djikstra')">Djikstras</li>
+    </ul>
     <button
       @click="runVisualization(algoOption)"
       class="visualize-btn"

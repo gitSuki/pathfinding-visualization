@@ -4,7 +4,8 @@ import store from "./store/index.js";
 
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+library.add(faChevronUp);
 library.add(faChevronDown);
 
 const app = createApp(App);

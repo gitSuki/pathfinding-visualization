@@ -19,6 +19,7 @@ export default createStore({
       draggedNode: null,
       isAnimRunning: false,
       isResultsDisplayed: false,
+      isDropdownDisplayed: false
     };
   },
   getters: {
@@ -40,6 +41,9 @@ export default createStore({
     getIfResultsDisplayed(state) {
       return state.isResultsDisplayed;
     },
+    getIfDropdownDisplayed(state) {
+      return state.isDropdownDisplayed;
+    },
   },
   mutations: {
     setNewStartNode(state, payload) {
@@ -58,6 +62,9 @@ export default createStore({
     },
     setIfResultsDisplayed(state, payload) {
       state.isResultsDisplayed = payload.isResultsDisplayed;
+    },
+    setIfDropdownDisplayed(state, payload) {
+      state.isDropdownDisplayed = payload.setIfDropdownDisplayed;
     },
   },
   actions: {
@@ -78,6 +85,9 @@ export default createStore({
     },
     toggleAnimResults(context, payload) {
       context.commit("setIfResultsDisplayed", { isResultsDisplayed: payload });
+    },
+    toggleDropdown(context, payload) {
+      context.commit("setIfDropdownDisplayed", { setIfDropdownDisplayed: payload });
     },
   },
 });
