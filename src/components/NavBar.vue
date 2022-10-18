@@ -87,7 +87,7 @@ button {
   color: #eeeeee;
 }
 .visualize-btn {
-  background-color: #00adb5;
+  background-color: #64748b;
   font-weight: bold;
   transition: 250ms linear all;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
@@ -95,7 +95,7 @@ button {
 
 .visualize-btn:hover {
   background-color: #eeeeee;
-  color: #00adb5;
+  color: #64748b;
   transform: scale(1.05);
 }
 
@@ -106,16 +106,16 @@ button {
 }
 
 .clear-btn:hover {
-  color: #00adb5;
+  color: #64748b;
 }
 
 .disabled-btn.visualize-btn {
-  background-color: rgb(207, 66, 66);
+  background-color: #cf4242;
   pointer-events: none;
 }
 
 .disabled-btn.clear-btn {
-  color: rgb(207, 66, 66);
+  color: #cf4242;
   pointer-events: none;
 }
 </style>

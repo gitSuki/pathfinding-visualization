@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps } from "vue";
 import { useStore } from "vuex";
 
 const store = useStore();
@@ -156,18 +155,18 @@ div {
 }
 
 .visited-node {
-  background-color: #00adb5;
-  animation: 2000ms ease-out forwards visited-anim;
+  background-color: #64748b;
+  animation: 1500ms ease-out forwards visited-anim;
 }
 
 .shortest-path-node {
-  background-color: rgb(207, 66, 66);
+  background-color: #cf4242;
   animation: 1000ms ease-out forwards shortest-path-anim;
 }
 
 .wall-node {
   background-color: #15181a;
-  /* animation: 500ms forwards wall-anim; */
+  animation: 500ms forwards wall-anim;
 }
 
 .hide {
@@ -177,22 +176,22 @@ div {
 @keyframes visited-anim {
   0% {
     transform: scale(0.3);
-    background-color: rgba(0, 0, 66, 0.75);
+    background-color: #1e293b;
     border-radius: 100%;
   }
 
   50% {
-    background-color: rgba(17, 104, 217, 0.75);
+    background-color: #475569;
   }
 
   75% {
     transform: scale(1.2);
-    background-color: rgba(0, 217, 159, 0.75);
+    background-color: #71717a;
   }
 
   100% {
     transform: scale(1);
-    background-color: #00adb5;
+    background-color: #64748b;
   }
 }
 
@@ -223,7 +222,7 @@ div {
 
   100% {
     transform: scale(1);
-    background-color: rgb(207, 66, 66);
+    background-color: #cf4242;
   }
 }
 </style>

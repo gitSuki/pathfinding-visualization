@@ -79,7 +79,7 @@ function findShortestPath(endNode) {
 
 function animateAlgo(visitedNodesInOrder, shortestPath) {
   // creates the delayed animation effect that shows all the nodes
-  // that djikstras algo visited in order
+  // that the search algorithm visited in order
   for (let i = 0; i < visitedNodesInOrder.length; i++) {
     if (i === visitedNodesInOrder.length - 1) {
       setTimeout(() => {
@@ -95,7 +95,7 @@ function animateAlgo(visitedNodesInOrder, shortestPath) {
 
 function animateShortestPath(shortestPath) {
   // creates the delayed animation effect to show the shortest path
-  // once djikstras algo has discovered the end node
+  // once the search algorithm has discovered the end node
   for (let i = 0; i < shortestPath.length; i++) {
     setTimeout(() => {
       if (i === shortestPath.length - 1) store.dispatch("animEnd");
