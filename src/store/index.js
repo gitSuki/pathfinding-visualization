@@ -19,7 +19,7 @@ export default createStore({
       draggedNode: null,
       isAnimRunning: false,
       isResultsDisplayed: false,
-      isDropdownDisplayed: false
+      isDropdownDisplayed: false,
     };
   },
   getters: {
@@ -87,7 +87,9 @@ export default createStore({
       context.commit("setIfResultsDisplayed", { isResultsDisplayed: payload });
     },
     toggleDropdown(context, payload) {
-      context.commit("setIfDropdownDisplayed", { setIfDropdownDisplayed: payload });
+      context.commit("setIfDropdownDisplayed", {
+        setIfDropdownDisplayed: payload,
+      });
     },
   },
 });

@@ -21,6 +21,7 @@ for (let i = 0; i < grid.rows; i++) {
 }
 
 function createGridNodeObject(row, col) {
+  const randomWeights = [1, 3, 4]
   return {
     row: row,
     col: col,
@@ -37,6 +38,8 @@ function createGridNodeObject(row, col) {
     isBeingDragged: false,
     previousNode: null,
     distance: Infinity,
+    // random selects a value from the randomWeights array
+    weight: randomWeights[Math.floor(Math.random() * randomWeights.length)],
   };
 }
 
@@ -125,6 +128,7 @@ function animateShortestPath(shortestPath) {
         :isBeingDragged="grid.cells[i - 1][j - 1].isBeingDragged"
         :previousNode="grid.cells[i - 1][j - 1].previousNode"
         :distance="grid.cells[i - 1][j - 1].distance"
+        :weight="grid.cells[i - 1][j - 1].weight"
       ></grid-node>
     </div>
   </main>

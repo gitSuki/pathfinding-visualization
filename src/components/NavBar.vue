@@ -33,14 +33,14 @@ function clearBoard(clearWalls) {
   }
 }
 
-// logic for selecting which animation to play
+// logic for the select dropdown menu
 const algoOption = ref("astar");
 
 const algoOptionDisplayText = computed(() => {
   if (algoOption.value === "astar") {
-    return "A* Search";
+    return "A* Search ";
   } else if (algoOption.value === "djikstra") {
-    return "Djikstra";
+    return "Djikstra ";
   }
 });
 
@@ -108,6 +108,19 @@ button {
   padding: 0.75rem 1.5rem;
   font-size: 1.25rem;
   color: #eeeeee;
+}
+
+ul {
+  position: relative;
+  display: inline-block;
+}
+
+li {
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
 }
 
 .select-btn {

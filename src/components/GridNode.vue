@@ -15,6 +15,7 @@ const props = defineProps({
   isBeingDragged: Boolean,
   previousNode: null,
   distance: null,
+  weight: Number,
 });
 
 // clicking and dragging functionality for walls and and start/end nodes
@@ -132,7 +133,7 @@ document.addEventListener(
       'shortest-path-node': isShortestPathAnim,
       hide: isBeingDragged,
     }"
-  ></div>
+  >{{ props.weight }}</div>
 </template>
 
 <style scoped>
@@ -142,6 +143,8 @@ div {
   outline: 1px solid #4f5153;
   display: inline-block;
   transition: 500ms linear all;
+  text-align: center;
+  color: #ffffff;
   cursor: grab !important;
 }
 
