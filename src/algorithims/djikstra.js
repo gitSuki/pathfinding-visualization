@@ -30,10 +30,10 @@ function sortNodesByDistance(unvisitedNodes) {
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
 }
 
-function updateUnvisitedNeighbors(node, grid) {
-  const unvisitedNeighbors = getUnvisitedNeighbors(node, grid);
+function updateUnvisitedNeighbors(currNode, grid) {
+  const unvisitedNeighbors = getUnvisitedNeighbors(currNode, grid);
   for (let i = 0; i < unvisitedNeighbors.length; i++) {
-    unvisitedNeighbors[i].distance = node.distance + 1; // add weighting here
-    unvisitedNeighbors[i].previousNode = node;
+    unvisitedNeighbors[i].distance = currNode.distance + unvisitedNeighbors[i].weight; // add weighting here
+    unvisitedNeighbors[i].previousNode = currNode;
   }
 }
