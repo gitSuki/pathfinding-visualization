@@ -64,6 +64,22 @@ function changeSelectedAlgo(newAlgo) {
   <nav>
     <h1>Pathfinding Visualization</h1>
     <div class="algo-desc">
+      <button
+        @click="runVisualization(algoOption)"
+        class="visualize-btn"
+        :class="{ 'disabled-btn': isAnimActive }"
+      >
+        Visualize
+      </button>
+      <button
+        @click="clearBoard(true)"
+        class="clear-btn"
+        :class="{ 'disabled-btn': isAnimActive }"
+      >
+        Clear Board
+      </button>
+    </div>
+    <div class="algo-desc">
       <span>Algorithim:</span>
       <div class="dropdown">
         <button class="select-btn" @click="toggleAlgoList">
@@ -80,20 +96,6 @@ function changeSelectedAlgo(newAlgo) {
         </ul>
       </div>
     </div>
-    <button
-      @click="runVisualization(algoOption)"
-      class="visualize-btn"
-      :class="{ 'disabled-btn': isAnimActive }"
-    >
-      Visualize
-    </button>
-    <button
-      @click="clearBoard(true)"
-      class="clear-btn"
-      :class="{ 'disabled-btn': isAnimActive }"
-    >
-      Clear Board
-    </button>
   </nav>
 </template>
 
