@@ -55,29 +55,31 @@ function toggleAlgoList() {
 }
 
 function changeSelectedAlgo(newAlgo) {
-  console.log(algoOption);
   algoOption.value = newAlgo;
+  store.dispatch("toggleDropdown", !store.getters.getIfDropdownDisplayed);
 }
 </script>
 
 <template>
   <nav>
     <h1>Pathfinding Visualization</h1>
-    <div class="dropdown">
-      <button class="select-btn" @click="toggleAlgoList">Select <font-awesome-icon :icon="chevronStatus" /></button>
-      <ul class="dropdown-menu" :class="{ 'visual-button': store.getters.getIfDropdownDisplayed }">
-        <li @click="changeSelectedAlgo('astar')">A* Search</li>
-        <hr>
-        <li @click="changeSelectedAlgo('djikstra')">Djikstras</li>
-      </ul>
+    <div class="algo-desc">
+      <span>Algorithim:</span>
+      <div class="dropdown">
+        <button class="select-btn" @click="toggleAlgoList">
+          {{ algoOptionDisplayText }}
+          <font-awesome-icon :icon="chevronStatus" />
+        </button>
+        <ul
+          class="dropdown-menu"
+          :class="{ 'dropdown-visual': store.getters.getIfDropdownDisplayed }"
+        >
+          <li @click="changeSelectedAlgo('astar')">A* Search</li>
+          <hr />
+          <li @click="changeSelectedAlgo('djikstra')">Djikstra</li>
+        </ul>
+      </div>
     </div>
-    <!-- <button class="select-btn" @click="toggleAlgoList">
-      {{ algoOptionDisplayText }} <font-awesome-icon :icon="chevronStatus" />
-    </button>
-    <ul v-if="store.getters.getIfDropdownDisplayed">
-      <li @click="changeSelectedAlgo('astar')">A* Search</li>
-      <li @click="changeSelectedAlgo('djikstra')">Djikstras</li>
-    </ul> -->
     <button
       @click="runVisualization(algoOption)"
       class="visualize-btn"
@@ -103,7 +105,7 @@ nav {
   flex-wrap: wrap;
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-  gap: 1rem;
+  gap: 1rem 5rem;
   background-color: #4f5153;
   color: #eeeeee;
   box-shadow: 0 7px 30px rgba(0, 0, 0, 0.15);
@@ -118,9 +120,31 @@ button {
   color: #eeeeee;
 }
 
+span {
+  font-size: 18px;
+  font-weight: 900;
+  padding-right: 1rem;
+}
+
 hr {
   border-color: #111111;
   border-top: 1px solid #111111;
+}
+
+li {
+  padding: 1rem;
+  transition: 200ms;
+}
+
+li:hover {
+  background-color: #64748b;
+  color: #f1f5f9;
+  cursor: pointer;
+}
+
+.algo-desc {
+  display: flex;
+  align-items: center;
 }
 
 .visualize-btn {
@@ -158,7 +182,8 @@ hr {
 
 .select-btn {
   color: #111111;
-  background-color: #64748b;
+  background-color: #f1f5f9;
+  width: 12rem;
 }
 
 .dropdown {
@@ -167,11 +192,12 @@ hr {
 
 .dropdown-menu {
   color: #111111;
-  background-color: #64748b;
+  background-color: #f8fafc;
+  text-align: center;
   position: absolute;
-  display: flex;
-  flex-direction: column;
   gap: 1rem;
+  left: 0.5rem;
+  width: 11rem;
   list-style: none;
   top: calc(100% + 0.5rem);
   background-color: grey;
@@ -183,8 +209,8 @@ hr {
   pointer-events: none;
 }
 
-.visual-button {
-  background-color: #64748b;
+.dropdown-visual {
+  background-color: #f8fafc;
   opacity: 1;
   transform: translateY(0px);
   pointer-events: auto;
