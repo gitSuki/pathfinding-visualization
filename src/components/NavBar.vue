@@ -63,13 +63,21 @@ function changeSelectedAlgo(newAlgo) {
 <template>
   <nav>
     <h1>Pathfinding Visualization</h1>
-    <button class="select-btn" @click="toggleAlgoList">
+    <div class="dropdown">
+      <button class="select-btn" @click="toggleAlgoList">Select <font-awesome-icon :icon="chevronStatus" /></button>
+      <ul class="dropdown-menu" :class="{ 'visual-button': store.getters.getIfDropdownDisplayed }">
+        <li @click="changeSelectedAlgo('astar')">A* Search</li>
+        <hr>
+        <li @click="changeSelectedAlgo('djikstra')">Djikstras</li>
+      </ul>
+    </div>
+    <!-- <button class="select-btn" @click="toggleAlgoList">
       {{ algoOptionDisplayText }} <font-awesome-icon :icon="chevronStatus" />
     </button>
     <ul v-if="store.getters.getIfDropdownDisplayed">
       <li @click="changeSelectedAlgo('astar')">A* Search</li>
       <li @click="changeSelectedAlgo('djikstra')">Djikstras</li>
-    </ul>
+    </ul> -->
     <button
       @click="runVisualization(algoOption)"
       class="visualize-btn"
@@ -110,21 +118,9 @@ button {
   color: #eeeeee;
 }
 
-ul {
-  position: relative;
-  display: inline-block;
-}
-
-li {
-  position: absolute;
-  background-color: #f1f1f1;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.select-btn {
-  color: #111111;
+hr {
+  border-color: #111111;
+  border-top: 1px solid #111111;
 }
 
 .visualize-btn {
@@ -158,5 +154,39 @@ li {
 .disabled-btn.clear-btn {
   color: #cf4242;
   pointer-events: none;
+}
+
+.select-btn {
+  color: #111111;
+  background-color: #64748b;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  color: #111111;
+  background-color: #64748b;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  top: calc(100% + 0.5rem);
+  background-color: grey;
+  border-radius: 0.25rem;
+  box-shadow: 0 2px 15px 0 rgba(0, 0, 0, 0.3);
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: all 150ms ease-in-out;
+  pointer-events: none;
+}
+
+.visual-button {
+  background-color: #64748b;
+  opacity: 1;
+  transform: translateY(0px);
+  pointer-events: auto;
 }
 </style>
