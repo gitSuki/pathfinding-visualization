@@ -37,7 +37,7 @@ function createGridNodeObject(row, col) {
     isShortestPathAnim: false,
     isBeingDragged: false,
     previousNode: null,
-    distance: Infinity,
+    distanceSoFar: Infinity,
     // random selects a value from the randomWeights array
     weight: randomWeights[Math.floor(Math.random() * randomWeights.length)],
   };
@@ -127,7 +127,7 @@ function animateShortestPath(shortestPath) {
         :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
         :isBeingDragged="grid.cells[i - 1][j - 1].isBeingDragged"
         :previousNode="grid.cells[i - 1][j - 1].previousNode"
-        :distance="grid.cells[i - 1][j - 1].distance"
+        :distanceSoFar="grid.cells[i - 1][j - 1].distanceSoFar"
         :weight="grid.cells[i - 1][j - 1].weight"
       ></grid-node>
     </div>

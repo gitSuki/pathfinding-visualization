@@ -14,7 +14,7 @@ const props = defineProps({
   isShortestPathAnim: Boolean,
   isBeingDragged: Boolean,
   previousNode: null,
-  distance: null,
+  distanceSoFar: null,
   weight: Number,
 });
 
@@ -22,6 +22,7 @@ const props = defineProps({
 const grid = store.getters.getGrid;
 
 function handleClick(row, col) {
+  console.log(props.distanceSoFar)
   if (!store.getters.getAnimState && !store.getters.getIfResultsDisplayed) {
     if (
       grid.cells[row][col].isStart === false &&
