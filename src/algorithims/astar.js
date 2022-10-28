@@ -1,28 +1,49 @@
 import { getUnvisitedNeighbors } from "./helper.js";
 
-export default function aStar(grid, startNode, finishNode) {
-  // returns a list of all visited nodes in the order they were visited
-  // all other nodes besides the startNode have their distance set to infinity
-
+// returns a list of all visited nodes in the order they were visited
+// all other nodes besides the startNode have their distance set to infinity
+export default function aStar(grid, startNode, targetNode) {
+  // Initialized closedSet and openSet and initialize the distance for the starting node
   // closedSet = the set of nodes that have been traversed
   // openSet = the set of discovered nodes that haven't been traversed yet
   let closedSet = [];
   let openSet = [];
-  startNode.distance = 0;
-  startNode.manhattanDistance = 0;
-  startNode.totalDistance = 0;
+  startNode.distanceSoFar = 0;
   openSet.push(startNode);
 
+  // processes each node until the reaching the target
   while (openSet.length > 0) {
-    let currNode = findClosest(openSet);
-    if (currNode === finishNode) return closedSet;
+    // Find the smallest element in the openSet
+    const currNode = findClosest(openSet);
+
+    // If it has reached the target node then terminates,
+    // returning the closedSet to be animated
+    if (currNode === targetNode) return closedSet;
+
+    // Otherwise gets the current node's connections
+    const connections = getConnections(currNode, grid)
+    console.log(connections)
+
+    // ------
 
     openSet = removeNodeFromArray(currNode, openSet);
+
     if (currNode.isWall) continue;
     currNode.isVisited = true;
-    updateNeighbors(currNode, grid, openSet, finishNode);
+    updateNeighbors(currNode, grid, openSet, targetNode);
     closedSet.push(currNode);
   }
+}
+
+function getConnections(node, grid) {
+  const { col, row } = node;
+  const connections = [];
+  if (row > 0) connections.push(grid[row - 1][col]);
+  if (col > 0) connections.push(grid[row][col - 1]);
+  if (row < grid.length - 1) connections.push(grid[row + 1][col]);
+  if (col < grid[0].length - 1) connections.push(grid[row][col + 1]);
+
+  return connections;
 }
 
 function findClosest(openSet) {
@@ -53,27 +74,27 @@ function removeNodeFromArray(nodeToRemove, openList) {
   return openList.filter((node) => node !== nodeToRemove);
 }
 
-function updateNeighbors(node, grid, openSet, finishNode) {
+function updateNeighbors(node, grid, openSet, targetNode) {
   let neighbors = getUnvisitedNeighbors(node, grid);
   // looping through array of unvisited neighbors
   for (let neighbor of neighbors) {
-    const newDistance = node.distance + 1;
+    const newDistance = node.distanceSoFar + 1;
     let newPath = false;
     if (openSet.includes(neighbor)) {
-      if (newDistance < neighbor.distance) {
-        neighbor.distance = newDistance;
+      if (newDistance < neighbor.distanceSoFar) {
+        neighbor.distanceSoFar = newDistance;
         newPath = true;
       }
       openSet.push(neighbor);
     } else {
-      neighbor.distance = newDistance;
+      neighbor.distanceSoFar = newDistance;
       openSet.push(neighbor);
       newPath = true;
     }
 
     if (newPath) {
-      neighbor.manhattanDistance = calculateManhattanDistance(neighbor, finishNode);
-      neighbor.totalDistance = neighbor.distance + neighbor.manhattanDistance;
+      neighbor.manhattanDistance = calculateManhattanDistance(neighbor, targetNode);
+      neighbor.totalDistance = neighbor.distanceSoFar + neighbor.manhattanDistance;
       neighbor.previousNode = node;
     }
   }
