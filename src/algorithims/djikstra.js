@@ -3,7 +3,7 @@ import { getUnvisitedNeighbors } from "./helper.js";
 export default function djikstrasAlgo(grid, startNode, finishNode) {
   // returns a list of all visited nodes in the order they were visited
   // all other nodes besides the startNode have their distance set to infinity
-  startNode.distanceSoFar = 0;
+  startNode.costSoFar = 0;
   const visitedNodesInOrder = [];
   const unvisitedNodes = grid.flat().filter((node) => !node.isWall);
 
@@ -13,28 +13,28 @@ export default function djikstrasAlgo(grid, startNode, finishNode) {
   // within the current node's neighbors, assign the new current node to be
   // the one with shortest distance. Loop until the finishNode is found.
   while (unvisitedNodes.length > 0) {
-    console.log(visitedNodesInOrder)
     sortNodesByDistance(unvisitedNodes);
     const currNode = unvisitedNodes.shift();
 
     // if solution can't be found
-    if (currNode.distanceSoFar === Infinity) return visitedNodesInOrder;
+    if (currNode.costSoFar === Infinity) break;
 
     currNode.isVisited = true;
     visitedNodesInOrder.push(currNode);
-    if (currNode === finishNode) return visitedNodesInOrder;
+    if (currNode === finishNode) break;
     else updateUnvisitedNeighbors(currNode, grid);
   }
+  return visitedNodesInOrder;
 }
 
 function sortNodesByDistance(unvisitedNodes) {
-  unvisitedNodes.sort((nodeA, nodeB) => nodeA.distanceSoFar - nodeB.distanceSoFar);
+  unvisitedNodes.sort((nodeA, nodeB) => nodeA.costSoFar - nodeB.costSoFar);
 }
 
 function updateUnvisitedNeighbors(currNode, grid) {
   const unvisitedNeighbors = getUnvisitedNeighbors(currNode, grid);
   for (let i = 0; i < unvisitedNeighbors.length; i++) {
-    unvisitedNeighbors[i].distanceSoFar = currNode.distanceSoFar + unvisitedNeighbors[i].weight; 
+    unvisitedNeighbors[i].costSoFar = currNode.costSoFar + unvisitedNeighbors[i].weight; 
     unvisitedNeighbors[i].previousNode = currNode;
   }
 }

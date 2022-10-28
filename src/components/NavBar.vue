@@ -26,7 +26,7 @@ function clearBoard(clearWalls) {
         grid.cells[i][j].isVisitedAnim = false;
         grid.cells[i][j].isShortestPathAnim = false;
         grid.cells[i][j].previousNode = null;
-        grid.cells[i][j].distance = Infinity;
+        grid.cells[i][j].costSoFar = Infinity;
       }
     }
     store.dispatch("toggleAnimResults", false);
