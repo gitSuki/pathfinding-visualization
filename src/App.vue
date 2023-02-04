@@ -21,7 +21,7 @@ for (let i = 0; i < grid.rows; i++) {
 }
 
 function createGridNodeObject(row, col) {
-    const randomWeights = [1, 3, 4];
+    const randomWeights = [1, 3, 5];
     return {
         row: row,
         col: col,
@@ -107,24 +107,26 @@ function animateShortestPath(shortestPath) {
     <nav-bar @visualization="runAlgo"></nav-bar>
     <grid-description></grid-description>
     <main>
-        <div class="row" v-for="i in grid.rows">
-            <!-- v-for is 1-indexed -->
-            <grid-node
-                v-for="j in grid.cols"
-                :row="grid.cells[i - 1][j - 1].row"
-                :col="grid.cells[i - 1][j - 1].col"
-                :isStart="grid.cells[i - 1][j - 1].isStart"
-                :isEnd="grid.cells[i - 1][j - 1].isEnd"
-                :isWall="grid.cells[i - 1][j - 1].isWall"
-                :isVisited="grid.cells[i - 1][j - 1].isVisited"
-                :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
-                :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
-                :isBeingDragged="grid.cells[i - 1][j - 1].isBeingDragged"
-                :previousNode="grid.cells[i - 1][j - 1].previousNode"
-                :distanceSoFar="grid.cells[i - 1][j - 1].distanceSoFar"
-                :weight="grid.cells[i - 1][j - 1].weight"
-            ></grid-node>
-        </div>
+        <content>
+            <div class="row" v-for="i in grid.rows">
+                <!-- v-for is 1-indexed -->
+                <grid-node
+                    v-for="j in grid.cols"
+                    :row="grid.cells[i - 1][j - 1].row"
+                    :col="grid.cells[i - 1][j - 1].col"
+                    :isStart="grid.cells[i - 1][j - 1].isStart"
+                    :isEnd="grid.cells[i - 1][j - 1].isEnd"
+                    :isWall="grid.cells[i - 1][j - 1].isWall"
+                    :isVisited="grid.cells[i - 1][j - 1].isVisited"
+                    :isVisitedAnim="grid.cells[i - 1][j - 1].isVisitedAnim"
+                    :isShortestPathAnim="grid.cells[i - 1][j - 1].isShortestPathAnim"
+                    :isBeingDragged="grid.cells[i - 1][j - 1].isBeingDragged"
+                    :previousNode="grid.cells[i - 1][j - 1].previousNode"
+                    :distanceSoFar="grid.cells[i - 1][j - 1].distanceSoFar"
+                    :weight="grid.cells[i - 1][j - 1].weight"
+                ></grid-node>
+            </div>
+        </content>
     </main>
 </template>
 
@@ -146,8 +148,10 @@ body {
 }
 
 main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     max-width: 1600px;
-    margin: 0 auto;
     padding-left: 7.5px;
     padding-right: 7.5px;
 }
