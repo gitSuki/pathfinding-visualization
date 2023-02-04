@@ -130,9 +130,7 @@ document.addEventListener(
             'shortest-path-node': isShortestPathAnim,
             hide: isBeingDragged,
         }"
-    >
-        {{ weight }}
-    </div>
+    ></div>
 </template>
 
 <style scoped>

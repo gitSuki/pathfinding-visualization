@@ -21,13 +21,14 @@ for (let i = 0; i < grid.rows; i++) {
 }
 
 function createGridNodeObject(row, col) {
-    const randomWeights = [1, 3, 5];
+    const randomWeights = [1, 3, 5, "wall"];
+    const nodeType = randomWeights[Math.floor(Math.random() * randomWeights.length)];
     return {
         row: row,
         col: col,
         isStart: store.getters.getStartNode.row === row && store.getters.getStartNode.col === col,
         isEnd: store.getters.getEndNode.row === row && store.getters.getEndNode.col === col,
-        isWall: false,
+        isWall: nodeType === "wall",
         isVisited: false,
         isVisitedAnim: false,
         isShortestPathAnim: false,
@@ -35,7 +36,7 @@ function createGridNodeObject(row, col) {
         previousNode: null,
         distanceSoFar: Infinity,
         // random selects a value from the randomWeights array
-        weight: randomWeights[Math.floor(Math.random() * randomWeights.length)],
+        weight: nodeType !== "wall" ? nodeType : null,
     };
 }
 
