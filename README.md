@@ -5,7 +5,7 @@
     A visualization tool built in Vue for the A* and Dijkstra Algorithms.
     <br />
     <br />
-    <a href="https://github.com/github_username/repo_name"><strong>Check Out the Demo »</strong></a>
+    <a href="https://gitsuki.github.io/pathfinding-visualization/"><strong>Check Out the Demo »</strong></a>
     <br />
     <br />
   </p>
@@ -26,7 +26,10 @@ Pathfinding algorithms can be quite confusing to wrap your head around as a begi
 
 ### Showcase
 
-To Do
+![chrome_6OBVWOVnLg](https://user-images.githubusercontent.com/96004796/216793725-446d4638-c67f-4371-bea9-4bf362e2ffe7.gif)
+![chrome_jlXlERBqnl](https://user-images.githubusercontent.com/96004796/216793718-49610e84-aae0-4f52-af83-d28b5ac8ac26.gif)
+You can also drag and drop the start/end locations and toggle walls.
+![chrome_XI1wPgvB52](https://user-images.githubusercontent.com/96004796/216793771-edd5add7-6432-49bf-bec3-5cbc4b76644b.gif)
 
 ### Built With
 
