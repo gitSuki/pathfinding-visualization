@@ -22,20 +22,22 @@ for (let i = 0; i < grid.rows; i++) {
 
 function createGridNodeObject(row, col) {
     const randomWeights = [1, 3, 5, "wall"];
+    // random selects a value from the randomWeights array
     const nodeType = randomWeights[Math.floor(Math.random() * randomWeights.length)];
+    const isStartNode = store.getters.getStartNode.row === row && store.getters.getStartNode.col === col
+    const isEndNode = store.getters.getEndNode.row === row && store.getters.getEndNode.col === col
     return {
         row: row,
         col: col,
-        isStart: store.getters.getStartNode.row === row && store.getters.getStartNode.col === col,
-        isEnd: store.getters.getEndNode.row === row && store.getters.getEndNode.col === col,
-        isWall: nodeType === "wall",
+        isStart: isStartNode,
+        isEnd: isEndNode,
+        isWall: nodeType === "wall" && !isStartNode && !isEndNode,
         isVisited: false,
         isVisitedAnim: false,
         isShortestPathAnim: false,
         isBeingDragged: false,
         previousNode: null,
         distanceSoFar: Infinity,
-        // random selects a value from the randomWeights array
         weight: nodeType !== "wall" ? nodeType : null,
     };
 }
