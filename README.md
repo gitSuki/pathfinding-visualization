@@ -34,7 +34,8 @@ You can also drag and drop the start/end locations and toggle walls.
 ### Built With
 
 * [JavaScript](https://www.javascript.com/)
-* [Vue](https://github.com/vuejs/vue)
+* [Vue 3 (Composition API)](https://github.com/vuejs/vue)
+* [Vue CLI](https://github.com/vuejs/vue-cli)
 * [Vuex](https://github.com/vuejs/vuex)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
